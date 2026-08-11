@@ -1,4 +1,4 @@
-# LUMUI Reference Browsers
+# LUMUI Browser
 
 **Reference browsers for LUMUI.**
 
