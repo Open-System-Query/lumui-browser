@@ -1,0 +1,14 @@
+<Window
+    x:Class="Lumui.Browser.Views.BrowserSettingsWindow"
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Settings | Lumi"
+    Icon="/Assets/lumui-brand.ico"
+    Width="980"
+    Height="700"
+    MinWidth="780"
+    MinHeight="560"
+    WindowStartupLocation="CenterOwner">
+  <ContentControl x:Name="SettingsHost" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+</Window>

@@ -1,0 +1,87 @@
+{
+  "lumui_protocol": "1.0",
+  "media_types": {
+    "lumui_json": "application/lumui+json",
+    "problem_json": "application/problem+json",
+    "html": "text/html"
+  },
+  "relations": {
+    "actions": "actions",
+    "alternate": "alternate",
+    "service_descriptor": "service-desc"
+  },
+  "paths": {
+    "well_known": "/.well-known/lumui"
+  },
+  "schemes": {
+    "http": "http",
+    "https": "https",
+    "mail": "mailto",
+    "telephone": "tel"
+  },
+  "region_roles": {
+    "introduction": "introduction",
+    "summary": "summary",
+    "problem": "problem",
+    "comparison": "comparison",
+    "features": "features",
+    "steps": "steps",
+    "examples": "examples",
+    "call_to_action": "callToAction",
+    "reference": "reference",
+    "supporting": "supporting"
+  },
+  "symbols": {
+    "back": "back",
+    "forward": "forward",
+    "reload": "reload",
+    "open": "open",
+    "close": "close",
+    "search": "search",
+    "menu": "menu",
+    "settings": "settings",
+    "developer_tools": "developerTools",
+    "previous": "previous",
+    "next": "next",
+    "home": "home",
+    "external": "external",
+    "information": "information",
+    "warning": "warning",
+    "error": "error",
+    "success": "success"
+  },
+  "brand_motifs": {
+    "none": "none",
+    "orbs": "orbs",
+    "lines": "lines",
+    "grid": "grid",
+    "waves": "waves"
+  },
+  "render_profiles": {
+    "web_responsive_default": "web.responsive.default",
+    "desktop_landscape_default": "desktop.landscape.default",
+    "tablet_landscape_default": "tablet.landscape.default",
+    "smartphone_portrait_default": "smartphone.portrait.default",
+    "smartwatch_square_default": "smartwatch.square.default",
+    "kiosk_landscape_public": "kiosk.landscape.public",
+    "appliance_landscape_shared": "appliance.landscape.shared"
+  },
+  "output_modes": {
+    "visual": "visual",
+    "screen_reader": "screenReader"
+  },
+  "interaction_modes": {
+    "standard": "standard",
+    "guided": "guided"
+  },
+  "accessibility_preferences": {
+    "default": "default",
+    "large_text": "largeText",
+    "high_contrast": "highContrast",
+    "reduced_motion": "reducedMotion"
+  },
+  "defaults": {
+    "input_method": "native",
+    "render_profile": "desktop.landscape.default"
+  }
+}

@@ -1,0 +1,188 @@
+<UserControl
+    x:Class="Lumui.Browser.Views.BrowserSettingsPanel"
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <UserControl.Styles>
+    <Style Selector="Grid.settings-root">
+      <Setter Property="Background" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Border.settings-row">
+      <Setter Property="Padding" Value="0,16" />
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="0,0,0,1" />
+    </Style>
+    <Style Selector="TextBlock.settings-label">
+      <Setter Property="FontSize" Value="15" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="TextBlock.settings-help">
+      <Setter Property="Margin" Value="0,3,0,0" />
+      <Setter Property="Foreground" Value="#5A5A5A" />
+      <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <Style Selector="TextBlock.settings-title">
+      <Setter Property="Margin" Value="0,0,0,8" />
+      <Setter Property="FontSize" Value="38" />
+      <Setter Property="FontWeight" Value="Light" />
+    </Style>
+    <Style Selector="Button.settings-nav">
+      <Setter Property="MinHeight" Value="42" />
+      <Setter Property="Padding" Value="14,9" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="0" />
+      <Setter Property="HorizontalContentAlignment" Value="Left" />
+      <Setter Property="FontWeight" Value="Normal" />
+    </Style>
+    <Style Selector="Button.settings-nav:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#EDEDED" />
+    </Style>
+    <Style Selector="Border.settings-navigation">
+      <Setter Property="Background" Value="#F7F7F7" />
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="0,0,1,0" />
+    </Style>
+    <Style Selector="Button.settings-nav.selected">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentSoftBrush}" />
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentStrongBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="BorderThickness" Value="4,0,0,0" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="ToggleSwitch.settings-control">
+      <Setter Property="HorizontalAlignment" Value="Right" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+      <Setter Property="OnContent" Value="" />
+      <Setter Property="OffContent" Value="" />
+    </Style>
+    <Style Selector="Grid.settings-root.dark Border.settings-row">
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Grid.settings-root.dark TextBlock.settings-help">
+      <Setter Property="Foreground" Value="#C8C8C8" />
+    </Style>
+    <Style Selector="Grid.settings-root.dark Button.settings-nav.selected">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentDarkSurfaceBrush}" />
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentLightBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentBrush}" />
+    </Style>
+    <Style Selector="Grid.settings-root.dark Button.settings-nav:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#1C1C1C" />
+    </Style>
+    <Style Selector="Grid.settings-root.dark Border.settings-navigation">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Grid.settings-root.high-contrast Border.settings-row">
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.settings-root.high-contrast Border.settings-navigation">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="0,0,2,0" />
+    </Style>
+    <Style Selector="Grid.settings-root.high-contrast TextBlock.settings-help">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.settings-root.high-contrast Button.settings-nav">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.settings-root.high-contrast Button.settings-nav.selected">
+      <Setter Property="Background" Value="#FFF200" />
+      <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    <Style Selector="Grid.settings-root.high-contrast Button.settings-nav:pointerover">
+      <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    <Style Selector="Grid.settings-root.high-contrast Button.settings-nav:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#FFF200" />
+    </Style>
+    <Style Selector="Grid.settings-root.dark">
+      <Setter Property="Background" Value="#000000" />
+    </Style>
+    <Style Selector="Grid.settings-root.high-contrast">
+      <Setter Property="Background" Value="#000000" />
+    </Style>
+  </UserControl.Styles>
+
+  <Grid x:Name="SettingsRoot" Classes="settings-root" ColumnDefinitions="250,*">
+    <Border Padding="20" Classes="settings-navigation">
+      <Grid RowDefinitions="Auto,*">
+        <TextBox x:Name="SettingsSearchBox" MinHeight="42" PlaceholderText="Search settings" AutomationProperties.Name="Search settings" />
+        <ScrollViewer Grid.Row="1" Margin="0,16,0,0" HorizontalContentAlignment="Stretch" VerticalScrollBarVisibility="Auto">
+          <StackPanel Spacing="3" HorizontalAlignment="Stretch">
+            <Button x:Name="GeneralNavButton" Classes="settings-nav selected" Content="General" />
+            <Button x:Name="TextNavButton" Classes="settings-nav" Content="Text" />
+            <Button x:Name="ColorsNavButton" Classes="settings-nav" Content="Colors" />
+            <Button x:Name="ComfortNavButton" Classes="settings-nav" Content="Comfort" />
+            <Button x:Name="PrivacyNavButton" Classes="settings-nav" Content="Privacy" />
+            <Button x:Name="DownloadsNavButton" Classes="settings-nav" Content="Downloads" />
+            <Button x:Name="PermissionsNavButton" Classes="settings-nav" Content="Permissions" />
+          </StackPanel>
+        </ScrollViewer>
+      </Grid>
+    </Border>
+
+    <Grid Grid.Column="1">
+      <ScrollViewer x:Name="GeneralPage" Padding="32,28,42,34" VerticalScrollBarVisibility="Auto">
+        <StackPanel MaxWidth="720" HorizontalAlignment="Left">
+          <TextBlock Classes="settings-title" Text="General" />
+          <TextBlock Classes="settings-help" Margin="0,0,0,12" Text="Choose what opens and how tabs behave." />
+          <Border Classes="settings-row">
+            <Grid ColumnDefinitions="*,260" ColumnSpacing="24"><StackPanel><TextBlock Classes="settings-label" Text="Startup" /><TextBlock Classes="settings-help" Text="Choose what opens with the browser." /></StackPanel><ComboBox x:Name="StartupBox" Grid.Column="1" VerticalAlignment="Center" /></Grid>
+          </Border>
+          <Border Classes="settings-row">
+            <StackPanel Spacing="8"><TextBlock Classes="settings-label" Text="Home page" /><TextBlock Classes="settings-help" Text="Used by Home and at startup." /><TextBox x:Name="HomePageBox" MinHeight="42" PlaceholderText="https://example.com" /></StackPanel>
+          </Border>
+          <Border Classes="settings-row">
+            <Grid ColumnDefinitions="*,260" ColumnSpacing="24"><StackPanel><TextBlock Classes="settings-label" Text="New tabs" /><TextBlock Classes="settings-help" Text="Choose what appears in a new tab." /></StackPanel><ComboBox x:Name="NewTabModeBox" Grid.Column="1" VerticalAlignment="Center" /></Grid>
+          </Border>
+          <Border x:Name="NewTabPageRow" Classes="settings-row">
+            <StackPanel Spacing="8"><TextBlock Classes="settings-label" Text="New tab page" /><TextBlock Classes="settings-help" Text="Enter the page to open." /><TextBox x:Name="NewTabPageBox" MinHeight="42" PlaceholderText="https://example.com" /></StackPanel>
+          </Border>
+          <Border Classes="settings-row">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24"><StackPanel><TextBlock Classes="settings-label" Text="Close multiple tabs" /><TextBlock Classes="settings-help" Text="Ask before closing several tabs." /></StackPanel><ToggleSwitch x:Name="ConfirmTabsToggle" Grid.Column="1" Classes="settings-control" /></Grid>
+          </Border>
+          <Border Classes="settings-row">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24"><StackPanel><TextBlock Classes="settings-label" Text="Passwords" /><TextBlock Classes="settings-help" Text="View and manage saved sign-in details." /></StackPanel><Button x:Name="OpenPasswordsButton" Grid.Column="1" Content="Open manager" VerticalAlignment="Center" /></Grid>
+          </Border>
+        </StackPanel>
+      </ScrollViewer>
+
+      <ContentControl x:Name="ReadingSettingsHost" IsVisible="False" />
+
+      <ScrollViewer x:Name="PrivacyPage" Padding="32,28,42,34" IsVisible="False" VerticalScrollBarVisibility="Auto">
+        <StackPanel MaxWidth="720" HorizontalAlignment="Left">
+          <TextBlock Classes="settings-title" Text="Privacy" />
+          <TextBlock Classes="settings-help" Margin="0,0,0,12" Text="Control data stored by the browser." />
+          <Border Classes="settings-row"><Grid ColumnDefinitions="*,Auto" ColumnSpacing="24"><StackPanel><TextBlock Classes="settings-label" Text="Browsing history" /><TextBlock Classes="settings-help" Text="Keep a local list of visited pages." /></StackPanel><ToggleSwitch x:Name="HistoryToggle" Grid.Column="1" Classes="settings-control" /></Grid></Border>
+          <Border Classes="settings-row"><Grid ColumnDefinitions="*,Auto" ColumnSpacing="24"><StackPanel><TextBlock Classes="settings-label" Text="Do Not Track" /><TextBlock Classes="settings-help" Text="Ask sites not to track activity." /></StackPanel><ToggleSwitch x:Name="DoNotTrackToggle" Grid.Column="1" Classes="settings-control" /></Grid></Border>
+          <Border Classes="settings-row"><Grid ColumnDefinitions="*,Auto" ColumnSpacing="24"><StackPanel><TextBlock Classes="settings-label" Text="Clear on exit" /><TextBlock Classes="settings-help" Text="Remove local history and temporary network data." /></StackPanel><ToggleSwitch x:Name="ClearOnExitToggle" Grid.Column="1" Classes="settings-control" /></Grid></Border>
+          <Border Classes="settings-row"><Grid ColumnDefinitions="*,Auto" ColumnSpacing="24"><StackPanel><TextBlock Classes="settings-label" Text="Browsing data" /><TextBlock Classes="settings-help" Text="Remove history, cookies and temporary network data." /></StackPanel><Button x:Name="ClearBrowsingDataButton" Grid.Column="1" Classes="danger-action" Content="Clear data" VerticalAlignment="Center" /></Grid></Border>
+          <Border Classes="settings-row"><Grid ColumnDefinitions="*,Auto" ColumnSpacing="24"><StackPanel><TextBlock Classes="settings-label" Text="Save passwords" /><TextBlock Classes="settings-help" Text="Offer to protect sign-in details for this Windows account." /></StackPanel><ToggleSwitch x:Name="SavePasswordsToggle" Grid.Column="1" Classes="settings-control" /></Grid></Border>
+          <Border Classes="settings-row"><Grid ColumnDefinitions="*,Auto" ColumnSpacing="24"><StackPanel><TextBlock Classes="settings-label" Text="Fill passwords" /><TextBlock Classes="settings-help" Text="Offer saved details on compatible sign-in forms." /></StackPanel><ToggleSwitch x:Name="AutoFillToggle" Grid.Column="1" Classes="settings-control" /></Grid></Border>
+        </StackPanel>
+      </ScrollViewer>
+
+      <ScrollViewer x:Name="DownloadsPage" Padding="32,28,42,34" IsVisible="False" VerticalScrollBarVisibility="Auto">
+        <StackPanel MaxWidth="720" HorizontalAlignment="Left">
+          <TextBlock Classes="settings-title" Text="Downloads" />
+          <TextBlock Classes="settings-help" Margin="0,0,0,12" Text="Choose where files are saved." />
+          <Border Classes="settings-row"><StackPanel Spacing="8"><TextBlock Classes="settings-label" Text="Save files to" /><TextBlock Classes="settings-help" Text="The default download folder." /><TextBox x:Name="DownloadFolderBox" MinHeight="42" /></StackPanel></Border>
+          <Border Classes="settings-row"><Grid ColumnDefinitions="*,Auto" ColumnSpacing="24"><StackPanel><TextBlock Classes="settings-label" Text="Choose each location" /><TextBlock Classes="settings-help" Text="Ask where to save every download." /></StackPanel><ToggleSwitch x:Name="AskDownloadToggle" Grid.Column="1" Classes="settings-control" /></Grid></Border>
+        </StackPanel>
+      </ScrollViewer>
+
+      <ScrollViewer x:Name="PermissionsPage" Padding="32,28,42,34" IsVisible="False" VerticalScrollBarVisibility="Auto">
+        <StackPanel MaxWidth="720" HorizontalAlignment="Left">
+          <TextBlock Classes="settings-title" Text="Permissions" />
+          <TextBlock Classes="settings-help" Margin="0,0,0,12" Text="Control access to protected capabilities." />
+          <Border Classes="settings-row"><Grid ColumnDefinitions="*,Auto" ColumnSpacing="24"><StackPanel><TextBlock Classes="settings-label" Text="Sensitive access" /><TextBlock Classes="settings-help" Text="Ask before a site uses protected device capabilities or personal data." /></StackPanel><ToggleSwitch x:Name="PermissionsToggle" Grid.Column="1" Classes="settings-control" /></Grid></Border>
+        </StackPanel>
+      </ScrollViewer>
+    </Grid>
+  </Grid>
+</UserControl>

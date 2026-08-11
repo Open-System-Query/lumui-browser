@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lumuiopensource.com/specification/schemas/discovery.schema.json",
+  "title": "LUMUI Well-Known Discovery Document",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["lumui_discovery", "id", "descriptor", "fallback"],
+  "properties": {
+    "lumui_discovery": { "const": "1.0" },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "descriptor": { "$ref": "#/$defs/link" },
+    "fallback": { "$ref": "#/$defs/link" }
+  },
+  "$defs": {
+    "link": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["href", "type"],
+      "properties": {
+        "href": { "type": "string", "format": "uri-reference" },
+        "type": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

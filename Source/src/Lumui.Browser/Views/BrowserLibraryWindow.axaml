@@ -1,0 +1,391 @@
+<Window
+    x:Class="Lumui.Browser.Views.BrowserLibraryWindow"
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Lumui.Browser.Controls"
+    Icon="/Assets/lumui-brand.ico"
+    Width="1040"
+    Height="760"
+    MinWidth="760"
+    MinHeight="540"
+    WindowStartupLocation="CenterOwner">
+  <Window.Styles>
+    <Style Selector="Border.manager-header">
+      <Setter Property="Padding" Value="32,24,32,20" />
+      <Setter Property="Background" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="0,0,0,1" />
+    </Style>
+    <Style Selector="Border.selection-bar">
+      <Setter Property="Padding" Value="18,10" />
+      <Setter Property="Background" Value="{DynamicResource LumiAccentSoftBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentLightBrush}" />
+      <Setter Property="BorderThickness" Value="0,0,0,1" />
+    </Style>
+    <Style Selector="TextBlock.manager-title">
+      <Setter Property="FontSize" Value="40" />
+      <Setter Property="FontWeight" Value="Light" />
+    </Style>
+    <Style Selector="TextBlock.manager-description">
+      <Setter Property="Margin" Value="0,3,0,0" />
+      <Setter Property="Foreground" Value="#5A5A5A" />
+      <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="TextBlock.manager-summary">
+      <Setter Property="Margin" Value="0,14,0,0" />
+      <Setter Property="Foreground" Value="#5A5A5A" />
+      <Setter Property="FontSize" Value="13" />
+    </Style>
+    <Style Selector="Button.header-action">
+      <Setter Property="MinHeight" Value="42" />
+      <Setter Property="Padding" Value="14,8" />
+      <Setter Property="Background" Value="#FFFFFF" />
+      <Setter Property="Foreground" Value="#111111" />
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="Button.header-action:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#EDEDED" />
+    </Style>
+    <Style Selector="Button.header-action.primary">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentBrush}" />
+    </Style>
+    <Style Selector="Button.header-action.primary:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentStrongBrush}" />
+    </Style>
+    <Style Selector="TextBlock.section-label">
+      <Setter Property="Margin" Value="0,22,0,8" />
+      <Setter Property="FontSize" Value="12" />
+      <Setter Property="FontWeight" Value="Bold" />
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="LetterSpacing" Value="0.8" />
+    </Style>
+    <Style Selector="Border.manager-row">
+      <Setter Property="Padding" Value="12,10" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="0,0,0,1" />
+    </Style>
+    <Style Selector="Border.manager-row:pointerover">
+      <Setter Property="Background" Value="#F7F7F7" />
+    </Style>
+    <Style Selector="Button.item-link">
+      <Setter Property="MinHeight" Value="52" />
+      <Setter Property="Padding" Value="4" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="0" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button.item-link:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#EDEDED" />
+    </Style>
+    <Style Selector="Button.item-link.selected">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentSoftBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="BorderThickness" Value="4,0,0,0" />
+    </Style>
+    <Style Selector="Border.item-icon">
+      <Setter Property="Width" Value="44" />
+      <Setter Property="Height" Value="44" />
+      <Setter Property="Background" Value="{DynamicResource LumiAccentSoftBrush}" />
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="Border.item-icon.history">
+      <Setter Property="Background" Value="#E5F2F9" />
+    </Style>
+    <Style Selector="Border.item-icon.password">
+      <Setter Property="Background" Value="#FFF4D6" />
+    </Style>
+    <Style Selector="Border.item-icon.failed">
+      <Setter Property="Background" Value="#FDECEC" />
+    </Style>
+    <Style Selector="TextBlock.item-icon-text">
+      <Setter Property="HorizontalAlignment" Value="Center" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentStrongBrush}" />
+      <Setter Property="FontSize" Value="12" />
+      <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style Selector="Button.icon-action">
+      <Setter Property="Width" Value="40" />
+      <Setter Property="MinWidth" Value="40" />
+      <Setter Property="Height" Value="40" />
+      <Setter Property="MinHeight" Value="40" />
+      <Setter Property="Padding" Value="10" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="#111111" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="0" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button.icon-action:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#F7F7F7" />
+    </Style>
+    <Style Selector="Button.icon-action controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#111111" />
+    </Style>
+    <Style Selector="Button.icon-action.danger:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#FDECEC" />
+      <Setter Property="Foreground" Value="#A40000" />
+    </Style>
+    <Style Selector="Border.empty-state">
+      <Setter Property="Margin" Value="0,72,0,0" />
+      <Setter Property="Padding" Value="28" />
+      <Setter Property="MaxWidth" Value="440" />
+      <Setter Property="HorizontalAlignment" Value="Center" />
+      <Setter Property="Background" Value="#F7F7F7" />
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="Border.detail-surface">
+      <Setter Property="Padding" Value="28" />
+      <Setter Property="Background" Value="#F7F7F7" />
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="Border.detail-field">
+      <Setter Property="Padding" Value="14" />
+      <Setter Property="Background" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="Button.text-action">
+      <Setter Property="MinHeight" Value="36" />
+      <Setter Property="Padding" Value="10,6" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentStrongBrush}" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="Button.text-action:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentSoftBrush}" />
+    </Style>
+    <Style Selector="Button.text-action.danger">
+      <Setter Property="Foreground" Value="#A40000" />
+    </Style>
+    <Style Selector="Window.dark">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.dark Border.manager-header">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Window.dark Border.selection-bar">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentDarkSurfaceBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentStrongBrush}" />
+    </Style>
+    <Style Selector="Window.dark TextBlock.manager-description">
+      <Setter Property="Foreground" Value="#C8C8C8" />
+    </Style>
+    <Style Selector="Window.dark TextBlock.manager-summary">
+      <Setter Property="Foreground" Value="#C8C8C8" />
+    </Style>
+    <Style Selector="Window.dark Button.header-action">
+      <Setter Property="Background" Value="#1C1C1C" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Window.dark Button.header-action:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#2A2A2A" />
+    </Style>
+    <Style Selector="Window.dark Button.header-action.primary">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentBrush}" />
+    </Style>
+    <Style Selector="Window.dark Button.header-action.primary:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentHoverBrush}" />
+    </Style>
+    <Style Selector="Window.dark TextBlock.section-label">
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentLightBrush}" />
+    </Style>
+    <Style Selector="Window.dark Border.manager-row">
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Window.dark Border.manager-row:pointerover">
+      <Setter Property="Background" Value="#000000" />
+    </Style>
+    <Style Selector="Window.dark Button.item-link:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#2A2A2A" />
+    </Style>
+    <Style Selector="Window.dark Button.item-link.selected">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentDarkSurfaceBrush}" />
+    </Style>
+    <Style Selector="Window.dark Border.item-icon">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentDarkSurfaceBrush}" />
+    </Style>
+    <Style Selector="Window.dark Border.item-icon.history">
+      <Setter Property="Background" Value="#22343D" />
+    </Style>
+    <Style Selector="Window.dark Border.item-icon.password">
+      <Setter Property="Background" Value="#3B3524" />
+    </Style>
+    <Style Selector="Window.dark Border.item-icon.failed">
+      <Setter Property="Background" Value="#422523" />
+    </Style>
+    <Style Selector="Window.dark TextBlock.item-icon-text">
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentLightBrush}" />
+    </Style>
+    <Style Selector="Window.dark Button.icon-action">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.dark Button.icon-action controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.dark Button.icon-action:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#2A2A2A" />
+    </Style>
+    <Style Selector="Window.dark Button.icon-action.danger:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#422523" />
+    </Style>
+    <Style Selector="Window.dark Button.icon-action.danger:pointerover controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#FFABA5" />
+    </Style>
+    <Style Selector="Window.dark Border.empty-state">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Window.dark Border.detail-surface">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Window.dark Border.detail-field">
+      <Setter Property="Background" Value="#1C1C1C" />
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Window.dark Button.text-action">
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentLightBrush}" />
+    </Style>
+    <Style Selector="Window.dark Button.text-action.danger">
+      <Setter Property="Foreground" Value="#FFABA5" />
+    </Style>
+    <Style Selector="Window.dark Button.text-action:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentDarkSurfaceBrush}" />
+    </Style>
+    <Style Selector="Window.dark Button.text-action.danger:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#422523" />
+    </Style>
+    <Style Selector="Window.high-contrast">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.manager-header">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="0,0,0,2" />
+    </Style>
+    <Style Selector="Window.high-contrast TextBlock.manager-description">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.high-contrast TextBlock.manager-summary">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.selection-bar">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="0,0,0,2" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.header-action">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.header-action.primary">
+      <Setter Property="Background" Value="#FFF200" />
+      <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.header-action:pointerover">
+      <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.header-action:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#FFF200" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.manager-row">
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.manager-row:pointerover">
+      <Setter Property="Background" Value="#242424" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.item-link:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#242424" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.icon-action:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#242424" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.icon-action.danger:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#FFF200" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.icon-action.danger:pointerover controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.item-icon">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Window.high-contrast TextBlock.item-icon-text">
+      <Setter Property="Foreground" Value="#FFF200" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.empty-state">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.icon-action controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.text-action">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.text-action.danger">
+      <Setter Property="Foreground" Value="#FFF200" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.text-action:pointerover">
+      <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.text-action:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#FFF200" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.detail-surface">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.detail-field">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+  </Window.Styles>
+
+  <Grid RowDefinitions="Auto,*">
+    <Border Grid.Row="0" Classes="manager-header">
+      <Grid RowDefinitions="Auto,Auto,Auto">
+        <StackPanel VerticalAlignment="Center">
+          <TextBlock x:Name="PageTitleText" Classes="manager-title" />
+          <TextBlock x:Name="PageDescriptionText" Classes="manager-description" />
+        </StackPanel>
+        <Grid Grid.Row="1" Margin="0,18,0,0" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
+          <TextBox x:Name="SearchBox" MinWidth="220" MinHeight="42" AutomationProperties.Name="Search" PlaceholderText="Search" />
+          <Button x:Name="SecondaryActionButton" Grid.Column="1" Classes="header-action" IsVisible="False" />
+          <Button x:Name="PrimaryActionButton" Grid.Column="2" Classes="header-action primary" IsVisible="False" />
+        </Grid>
+        <TextBlock x:Name="PageSummaryText" Grid.Row="2" Classes="manager-summary" />
+      </Grid>
+    </Border>
+    <ContentControl x:Name="BodyHost" Grid.Row="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+  </Grid>
+</Window>

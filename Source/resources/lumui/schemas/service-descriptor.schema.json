@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lumuiopensource.com/specification/schemas/service-descriptor.schema.json",
+  "title": "LUMUI Web Service Descriptor",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["lumui_web", "id", "title", "surface", "fallback"],
+  "properties": {
+    "lumui_web": { "const": "1.0" },
+    "id": { "$ref": "#/$defs/id" },
+    "title": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "description": { "type": "string", "maxLength": 2000 },
+    "publisher": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "url": { "type": "string", "format": "uri-reference" }
+      }
+    },
+    "surface": { "$ref": "#/$defs/link" },
+    "route_surface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["template", "type"],
+      "properties": {
+        "template": { "type": "string", "minLength": 1 },
+        "type": { "const": "application/lumui+json" }
+      }
+    },
+    "actions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["href", "type", "method"],
+      "properties": {
+        "href": { "type": "string", "format": "uri-reference" },
+        "type": { "const": "application/lumui+json" },
+        "method": { "const": "POST" },
+        "max_bytes": { "type": "integer", "minimum": 1024, "maximum": 1048576 }
+      }
+    },
+    "schemas": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "format": "uri-reference" }
+    },
+    "documentation": { "$ref": "#/$defs/link" },
+    "languages": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 2, "maxLength": 35 },
+      "uniqueItems": true
+    },
+    "discovery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["well_known", "content_negotiation"],
+      "properties": {
+        "well_known": { "type": "string", "format": "uri-reference" },
+        "content_negotiation": { "type": "boolean" },
+        "html_link_relations": {
+          "type": "array",
+          "items": { "enum": ["actions", "alternate", "service-desc"] },
+          "uniqueItems": true
+        }
+      }
+    },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["surface", "message"],
+      "properties": {
+        "surface": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" },
+        "message": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "origin_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "surfaces": { "enum": ["same-origin", "allowlist"] },
+        "actions": { "enum": ["same-origin", "allowlist"] },
+        "assets": { "enum": ["same-origin", "allowlist"] },
+        "allowed_origins": {
+          "type": "array",
+          "items": { "type": "string", "format": "uri" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "authentication": {
+      "type": "object",
+      "required": ["mode"],
+      "properties": {
+        "mode": { "enum": ["none", "session", "bearer", "oauth2", "device"] },
+        "login": { "type": "string", "format": "uri-reference" },
+        "logout": { "type": "string", "format": "uri-reference" },
+        "note": { "type": "string", "maxLength": 1000 }
+      },
+      "additionalProperties": false
+    },
+    "profiles": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "outputs": {
+      "type": "array",
+      "items": { "enum": ["visual", "screenReader"] },
+      "uniqueItems": true
+    },
+    "appearances": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "fallback": { "$ref": "#/$defs/link" },
+    "specification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "href"],
+      "properties": {
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" },
+        "href": { "type": "string", "format": "uri-reference" }
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/jsonValue" }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "link": {
+      "type": "object",
+      "required": ["href", "type"],
+      "properties": {
+        "href": { "type": "string", "format": "uri-reference" },
+        "type": { "type": "string", "minLength": 1 },
+        "method": { "type": "string" },
+        "max_bytes": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "jsonValue": {
+      "oneOf": [
+        { "type": ["string", "number", "boolean", "null"] },
+        { "type": "array", "items": { "$ref": "#/$defs/jsonValue" } },
+        {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/jsonValue" }
+        }
+      ]
+    }
+  }
+}

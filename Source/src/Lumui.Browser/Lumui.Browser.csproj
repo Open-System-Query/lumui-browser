@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <AssemblyName>lumi-desktop</AssemblyName>
+    <RootNamespace>Lumui.Browser</RootNamespace>
+    <AssemblyTitle>Lumi Desktop</AssemblyTitle>
+    <Product>Lumi</Product>
+    <Description>Lumi is the reference browser for LUMUI.</Description>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">win-x64</RuntimeIdentifier>
+    <PublishAot>true</PublishAot>
+    <IsAotCompatible>true</IsAotCompatible>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>full</TrimMode>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <BuiltInComInteropSupport>false</BuiltInComInteropSupport>
+    <IlcOptimizationPreference>Speed</IlcOptimizationPreference>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <LumuiBrandIcon>$(MSBuildProjectDirectory)\..\..\LUMUI_icon.ico</LumuiBrandIcon>
+    <ApplicationIcon>$(LumuiBrandIcon)</ApplicationIcon>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <StripSymbols>true</StripSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="$(LumuiBrandIcon)" Link="Assets\lumui-brand.ico" />
+  </ItemGroup>
+
+  <Target Name="RestoreLumuiBrandIcon" BeforeTargets="ValidateLumuiBrandIcon" Condition="!Exists('$(LumuiBrandIcon)')">
+    <Exec Command="powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\..\..\tools\Restore-BrandAssets.ps1&quot;" />
+  </Target>
+
+  <Target Name="ValidateLumuiBrandIcon" BeforeTargets="PrepareForBuild">
+    <Error Condition="!Exists('$(LumuiBrandIcon)')" Text="The canonical LUMUI icon was not found at '$(LumuiBrandIcon)'." />
+  </Target>
+
+  <Target Name="ValidateBundledMediaDecoder" AfterTargets="Build">
+    <Error Condition="'$(DesignTimeBuild)' != 'true' and !Exists('$(TargetDir)Resources\ffmpeg.exe')" Text="The bundled Lumi media decoder was not copied to the output directory." />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.1.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.1" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.1" />
+    <PackageReference Include="Optris.Icons.Avalonia.FontAwesome" Version="12.0.7" />
+    <PackageReference Include="Soenneker.Libraries.FFmpeg" Version="4.0.1085" IncludeAssets="contentFiles" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lumui.Client\Lumui.Client.csproj" />
+  </ItemGroup>
+
+</Project>

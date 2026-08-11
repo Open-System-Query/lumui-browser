@@ -1,0 +1,480 @@
+<Application
+    x:Class="Lumui.Browser.App"
+    x:CompileBindings="True"
+    RequestedThemeVariant="Light"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:controls="using:Lumui.Browser.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Application.Resources>
+    <Color x:Key="SystemAccentColor">#008F80</Color>
+    <Color x:Key="SystemAccentColorDark1">#007C70</Color>
+    <Color x:Key="SystemAccentColorDark2">#006B60</Color>
+    <Color x:Key="SystemAccentColorDark3">#005149</Color>
+    <Color x:Key="SystemAccentColorLight1">#2FA99D</Color>
+    <Color x:Key="SystemAccentColorLight2">#61BEB5</Color>
+    <Color x:Key="SystemAccentColorLight3">#A3D9D4</Color>
+    <SolidColorBrush x:Key="LumiAccentBrush" Color="#008F80" />
+    <SolidColorBrush x:Key="LumiAccentStrongBrush" Color="#006B60" />
+    <SolidColorBrush x:Key="LumiAccentHoverBrush" Color="#2FA99D" />
+    <SolidColorBrush x:Key="LumiAccentLightBrush" Color="#61BEB5" />
+    <SolidColorBrush x:Key="LumiAccentSoftBrush" Color="#D9F2EF" />
+    <SolidColorBrush x:Key="LumiAccentDarkSurfaceBrush" Color="#073833" />
+    <SolidColorBrush x:Key="LumiAccentSelectionBrush" Color="#A3D9D4" />
+  </Application.Resources>
+  <Application.Styles>
+    <FluentTheme />
+    <Style Selector="Window">
+      <Setter Property="Background" Value="#F7F7F7" />
+      <Setter Property="FontFamily" Value="Segoe UI" />
+      <Setter Property="FontSize" Value="14" />
+      <Setter Property="Foreground" Value="#111111" />
+    </Style>
+    <Style Selector="Border.tab-bar">
+      <Setter Property="Background" Value="#111111" />
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="BorderThickness" Value="0,0,0,4" />
+    </Style>
+    <Style Selector="Border.shell-bar">
+      <Setter Property="Background" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="0,0,0,1" />
+    </Style>
+    <Style Selector="TextBlock.shell-brand">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="FontSize" Value="24" />
+      <Setter Property="FontWeight" Value="Light" />
+      <Setter Property="LetterSpacing" Value="0.5" />
+    </Style>
+    <Style Selector="TextBlock.shell-label">
+      <Setter Property="Foreground" Value="#A9A9A9" />
+      <Setter Property="FontSize" Value="10" />
+      <Setter Property="FontWeight" Value="Bold" />
+      <Setter Property="LetterSpacing" Value="1.2" />
+    </Style>
+    <Style Selector="Border.browser-tab">
+      <Setter Property="MinWidth" Value="156" />
+      <Setter Property="MaxWidth" Value="280" />
+      <Setter Property="Height" Value="42" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="#474747" />
+      <Setter Property="BorderThickness" Value="0,0,0,1" />
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="Border.browser-tab.selected">
+      <Setter Property="Background" Value="#242424" />
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="BorderThickness" Value="0,0,0,4" />
+    </Style>
+    <Style Selector="ToggleButton.tab-title">
+      <Setter Property="MinHeight" Value="38" />
+      <Setter Property="Padding" Value="12,7" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="#BDBDBD" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="0" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="FontWeight" Value="Normal" />
+    </Style>
+    <Style Selector="Border.browser-tab.selected ToggleButton.tab-title">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="ToggleButton.tab-title:checked">
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="Button.tab-close">
+      <Setter Property="Width" Value="32" />
+      <Setter Property="MinWidth" Value="32" />
+      <Setter Property="MinHeight" Value="38" />
+      <Setter Property="Padding" Value="6" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="#8F8F8F" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="Button.tab-close:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#C50F1F" />
+    </Style>
+    <Style Selector="Border.status-bar">
+      <Setter Property="Background" Value="#111111" />
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="BorderThickness" Value="0,3,0,0" />
+    </Style>
+    <Style Selector="Border.status-bar TextBlock">
+      <Setter Property="Foreground" Value="#DADADA" />
+    </Style>
+    <Style Selector="Border.side-panel">
+      <Setter Property="Background" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="BorderThickness" Value="4,0,0,0" />
+    </Style>
+    <Style Selector="Border.browser-canvas">
+      <Setter Property="Background" Value="#F7F7F7" />
+    </Style>
+    <Style Selector="TextBlock.subtle">
+      <Setter Property="Foreground" Value="#5A5A5A" />
+    </Style>
+
+    <Style Selector="Button">
+      <Setter Property="MinHeight" Value="44" />
+      <Setter Property="Padding" Value="16,9" />
+      <Setter Property="CornerRadius" Value="0" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="ToggleButton">
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="TextBox">
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="Button.toolbar">
+      <Setter Property="Width" Value="44" />
+      <Setter Property="MinWidth" Value="44" />
+      <Setter Property="MinHeight" Value="44" />
+      <Setter Property="Padding" Value="10" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="#111111" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="0" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Border.tab-bar Button.toolbar">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Button.toolbar:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentBrush}" />
+    </Style>
+    <Style Selector="Button.toolbar:pointerover">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Button.toolbar:pressed /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentStrongBrush}" />
+    </Style>
+    <Style Selector="Button.toolbar:disabled">
+      <Setter Property="Opacity" Value="0.34" />
+    </Style>
+    <Style Selector="Button.viewer-history">
+      <Setter Property="Width" Value="44" />
+      <Setter Property="MinWidth" Value="44" />
+      <Setter Property="Height" Value="44" />
+      <Setter Property="MinHeight" Value="44" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="#111111" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button.viewer-history:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentBrush}" />
+    </Style>
+    <Style Selector="Button.viewer-history:pointerover">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Button.viewer-history:disabled">
+      <Setter Property="Opacity" Value="0.34" />
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="Button.toolbar controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#111111" />
+    </Style>
+    <Style Selector="Border.tab-bar Button.toolbar controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Button.toolbar:pointerover controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="ToggleButton.toolbar">
+      <Setter Property="Width" Value="44" />
+      <Setter Property="MinWidth" Value="44" />
+      <Setter Property="MinHeight" Value="44" />
+      <Setter Property="Padding" Value="10" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="#111111" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="0" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="ToggleButton.toolbar:checked">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.toolbar controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#111111" />
+    </Style>
+    <Style Selector="ToggleButton.toolbar:checked controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Button.primary-action">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="BorderThickness" Value="2" />
+      <Setter Property="Padding" Value="18,8" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button.primary-action:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentStrongBrush}" />
+    </Style>
+    <Style Selector="Button.primary-action controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Button.danger-action">
+      <Setter Property="Background" Value="#C50F1F" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#C50F1F" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Button.danger-action:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#8F0B16" />
+    </Style>
+
+    <Style Selector="Border.address-form">
+      <Setter Property="MinHeight" Value="44" />
+      <Setter Property="Padding" Value="5,3,3,3" />
+      <Setter Property="Background" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#777777" />
+      <Setter Property="BorderThickness" Value="2" />
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="Border.address-form:focus-within">
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentBrush}" />
+    </Style>
+    <Style Selector="TextBlock.address-state">
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="FontSize" Value="9" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="TextBox.address">
+      <Setter Property="MinHeight" Value="34" />
+      <Setter Property="Padding" Value="8,4" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="#111111" />
+      <Setter Property="CaretBrush" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="SelectionBrush" Value="{DynamicResource LumiAccentSelectionBrush}" />
+      <Setter Property="PlaceholderForeground" Value="#666666" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="0" />
+      <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector="Button.address-open">
+      <Setter Property="MinHeight" Value="34" />
+      <Setter Property="Padding" Value="18,5" />
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="ComboBox">
+      <Setter Property="MinHeight" Value="42" />
+      <Setter Property="Background" Value="#FFFFFF" />
+      <Setter Property="Foreground" Value="#111111" />
+      <Setter Property="BorderBrush" Value="#777777" />
+      <Setter Property="BorderThickness" Value="2" />
+      <Setter Property="CornerRadius" Value="0" />
+      <Setter Property="Padding" Value="10,6" />
+    </Style>
+    <Style Selector="ProgressBar">
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="Background" Value="#DADADA" />
+    </Style>
+    <Style Selector="Ellipse.status-indicator">
+      <Setter Property="Fill" Value="{DynamicResource LumiAccentBrush}" />
+    </Style>
+    <Style Selector="Border.dialog-header">
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="BorderThickness" Value="0,0,0,4" />
+    </Style>
+    <Style Selector="TextBlock.error">
+      <Setter Property="Foreground" Value="#C50F1F" />
+    </Style>
+
+    <Style Selector="Window.dark">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.dark Border.shell-bar">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Window.dark Border.tab-bar">
+      <Setter Property="Background" Value="#000000" />
+    </Style>
+    <Style Selector="Window.dark Border.status-bar">
+      <Setter Property="Background" Value="#000000" />
+    </Style>
+    <Style Selector="Window.dark Border.side-panel">
+      <Setter Property="Background" Value="#000000" />
+    </Style>
+    <Style Selector="Window.dark Border.browser-canvas">
+      <Setter Property="Background" Value="#000000" />
+    </Style>
+    <Style Selector="Window.dark TextBlock.subtle">
+      <Setter Property="Foreground" Value="#C8C8C8" />
+    </Style>
+    <Style Selector="Window.dark Button.toolbar">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.dark Button.toolbar controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.dark ToggleButton.toolbar">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.dark ToggleButton.toolbar controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.dark Border.address-form">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#8A8A8A" />
+    </Style>
+    <Style Selector="Window.dark TextBox.address">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="PlaceholderForeground" Value="#B8B8B8" />
+    </Style>
+    <Style Selector="Window.dark ComboBox">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#8A8A8A" />
+    </Style>
+    <Style Selector="Window.dark TextBox">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#8A8A8A" />
+      <Setter Property="CaretBrush" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="SelectionBrush" Value="{DynamicResource LumiAccentStrongBrush}" />
+      <Setter Property="PlaceholderForeground" Value="#B8B8B8" />
+    </Style>
+    <Style Selector="Window.dark ProgressBar">
+      <Setter Property="Background" Value="#333333" />
+    </Style>
+
+    <Style Selector="Window.high-contrast">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.shell-bar">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="0,0,0,2" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.tab-bar">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFF200" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.browser-tab">
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.browser-tab.selected">
+      <Setter Property="Background" Value="#FFF200" />
+      <Setter Property="BorderBrush" Value="#FFF200" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.browser-tab.selected ToggleButton.tab-title">
+      <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.browser-tab.selected Button.tab-close">
+      <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.status-bar">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFF200" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.side-panel">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFF200" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.browser-canvas">
+      <Setter Property="Background" Value="#000000" />
+    </Style>
+    <Style Selector="Window.high-contrast TextBlock.subtle">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.toolbar">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Window.high-contrast ToggleButton.toolbar">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.toolbar controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.high-contrast ToggleButton.toolbar controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.address-form">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Window.high-contrast Border.address-form:focus-within">
+      <Setter Property="BorderBrush" Value="#FFF200" />
+    </Style>
+    <Style Selector="Window.high-contrast TextBox.address">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="PlaceholderForeground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.high-contrast ComboBox">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.primary-action">
+      <Setter Property="Background" Value="#FFF200" />
+      <Setter Property="Foreground" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.primary-action controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.danger-action">
+      <Setter Property="Background" Value="#FFF200" />
+      <Setter Property="Foreground" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.toolbar:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#FFF200" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.toolbar:pointerover">
+      <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    <Style Selector="Window.high-contrast Button.toolbar:pointerover controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    <Style Selector="Window.high-contrast Ellipse.status-indicator">
+      <Setter Property="Fill" Value="#FFF200" />
+    </Style>
+    <Style Selector="Window.high-contrast TextBlock.error">
+      <Setter Property="Foreground" Value="#FFF200" />
+    </Style>
+
+    <Style Selector="Window.senior Button">
+      <Setter Property="MinHeight" Value="52" />
+      <Setter Property="FontSize" Value="17" />
+    </Style>
+    <Style Selector="Window.senior ToggleButton">
+      <Setter Property="MinHeight" Value="52" />
+      <Setter Property="FontSize" Value="17" />
+    </Style>
+    <Style Selector="Window.senior TextBox">
+      <Setter Property="MinHeight" Value="52" />
+      <Setter Property="FontSize" Value="17" />
+    </Style>
+    <Style Selector="Window.senior ComboBox">
+      <Setter Property="MinHeight" Value="52" />
+      <Setter Property="FontSize" Value="17" />
+    </Style>
+  </Application.Styles>
+</Application>

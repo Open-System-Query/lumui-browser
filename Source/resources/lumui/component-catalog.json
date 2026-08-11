@@ -1,0 +1,1228 @@
+{
+  "lumui_component_catalog": "1.0",
+  "compatible_surface": "1.0",
+  "status": "stable",
+  "common_required": [
+    "id",
+    "kind"
+  ],
+  "common_optional": [
+    "label",
+    "description",
+    "help",
+    "enabled",
+    "visible",
+    "priority",
+    "sensitive",
+    "live",
+    "required",
+    "readonly",
+    "value",
+    "default_value",
+    "action",
+    "actions",
+    "error",
+    "validation",
+    "fallback",
+    "metadata"
+  ],
+  "action_reference_fields": [
+    "action",
+    "actions",
+    "clear_action",
+    "copy_action",
+    "primary_action",
+    "reset_action",
+    "secondary_actions",
+    "submit_action"
+  ],
+  "component_reference_fields": [
+    "content",
+    "empty",
+    "fallback",
+    "illustration"
+  ],
+  "component_collection_fields": [
+    "children",
+    "items",
+    "nodes",
+    "regions",
+    "tabs"
+  ],
+  "semantic_hints": {
+    "content_extent": {
+      "values": [
+        "tiny",
+        "small",
+        "medium",
+        "large"
+      ],
+      "meaning": "Expected content volume for renderer planning."
+    },
+    "intrinsic_aspect_ratio": {
+      "meaning": "The natural proportion of media content."
+    }
+  },
+  "families": {
+    "structure": [
+      "page",
+      "section",
+      "form",
+      "list",
+      "optionBar",
+      "grid",
+      "table",
+      "tree",
+      "tabs",
+      "toolbar",
+      "menu",
+      "breadcrumb"
+    ],
+    "content": [
+      "text",
+      "valueDisplay",
+      "richText",
+      "codeBlock",
+      "link",
+      "quote",
+      "image",
+      "figure",
+      "imageCollection",
+      "icon",
+      "badge",
+      "status",
+      "clock",
+      "chart"
+    ],
+    "action_and_choice": [
+      "button",
+      "toggle",
+      "checkOption",
+      "imageOption",
+      "detailOption",
+      "checkBox",
+      "radioGroup",
+      "choice",
+      "multiSelect",
+      "comboBox",
+      "slider",
+      "stepper",
+      "rating"
+    ],
+    "input": [
+      "textField",
+      "textArea",
+      "passwordField",
+      "searchField",
+      "numberField",
+      "dateField",
+      "timeField",
+      "dateTimeField",
+      "dateRangeField",
+      "colorField",
+      "otpField"
+    ],
+    "feedback": [
+      "progress",
+      "meter",
+      "activity",
+      "alert",
+      "toast",
+      "error",
+      "emptyState"
+    ],
+    "media_and_capability": [
+      "audio",
+      "audioPlayer",
+      "video",
+      "videoPlayer",
+      "calendar",
+      "mediaPicker",
+      "map",
+      "navigation",
+      "locationPicker",
+      "dialer",
+      "contactPicker",
+      "filePicker",
+      "dialog",
+      "notification",
+      "graphic"
+    ],
+    "preview": [
+      "preview"
+    ]
+  },
+  "component_specification": "lumui-components.md",
+  "components": {
+    "page": {
+      "purpose": "Logical view or workflow step.",
+      "required": [
+        "id",
+        "title",
+        "regions"
+      ],
+      "optional": [
+        "role",
+        "description",
+        "primary_action",
+        "secondary_actions",
+        "back_behavior",
+        "priority"
+      ],
+      "presentation": "Present as one logical view or workflow step with a clear title, deterministic reading order and navigation to peer pages. Only the requested page SHOULD be primary at one time."
+    },
+    "section": {
+      "purpose": "Group of related content.",
+      "required": [
+        "id",
+        "items"
+      ],
+      "optional": [
+        "label",
+        "description",
+        "role",
+        "collapsible",
+        "priority"
+      ],
+      "presentation": "Group the items under a semantic heading when a label is present. Visual containment MAY vary, but role, order and collapsible state MUST remain available."
+    },
+    "form": {
+      "purpose": "Inputs submitted as one unit.",
+      "required": [
+        "id",
+        "items",
+        "actions"
+      ],
+      "optional": [
+        "submit_action",
+        "reset_action",
+        "validation_mode",
+        "dirty"
+      ],
+      "presentation": "Present the items as one labelled submission unit with associated validation and form actions. Submission MUST use the declared action and MUST NOT bypass field validation."
+    },
+    "list": {
+      "purpose": "Ordered collection.",
+      "required": [
+        "id",
+        "items"
+      ],
+      "optional": [
+        "selection_mode",
+        "empty",
+        "estimated_count",
+        "pagination",
+        "reorderable"
+      ],
+      "presentation": "Present items in their declared order using native list semantics. Selection, reordering, pagination and the declared empty state MUST remain operable without relying on visual position."
+    },
+    "optionBar": {
+      "purpose": "Page-level command surface.",
+      "required": [
+        "id",
+        "options"
+      ],
+      "optional": [
+        "action",
+        "label",
+        "description"
+      ],
+      "presentation": "Present page-level commands in a consistent, keyboard-reachable command area. Commands MAY move into an overflow presentation, but MUST NOT disappear."
+    },
+    "grid": {
+      "purpose": "Collection optimized for visual scanning.",
+      "required": [
+        "id",
+        "items"
+      ],
+      "optional": [
+        "selection_mode"
+      ],
+      "fallback": "list",
+      "presentation": "Use a spatial grid when it improves scanning and available space permits it. Reading and focus order MUST remain logical, with a list presentation as the default fallback."
+    },
+    "table": {
+      "purpose": "Row and column data.",
+      "required": [
+        "id",
+        "columns",
+        "rows"
+      ],
+      "optional": [
+        "caption",
+        "sortable",
+        "filterable",
+        "selection_mode",
+        "pagination"
+      ],
+      "fallback": "list or summary",
+      "presentation": "Expose caption, column headers and row-to-column relationships. Narrow presentations SHOULD reflow, scroll or use the declared list or summary fallback without losing those relationships."
+    },
+    "tree": {
+      "purpose": "Hierarchical data.",
+      "required": [
+        "id",
+        "nodes"
+      ],
+      "optional": [
+        "expanded_node_ids",
+        "selection_mode"
+      ],
+      "presentation": "Present an expandable hierarchy that exposes level, expanded state and selection. Keyboard viewers SHOULD follow native tree navigation conventions."
+    },
+    "tabs": {
+      "purpose": "Peer pages or views.",
+      "required": [
+        "id",
+        "tabs",
+        "selected"
+      ],
+      "optional": [],
+      "presentation": "Present peer views as a tab list with one selected tab and associated panel. Selection, focus movement and panel identity MUST be exposed to assistive technology."
+    },
+    "toolbar": {
+      "purpose": "Group of local actions.",
+      "required": [
+        "id",
+        "actions"
+      ],
+      "optional": [
+        "label"
+      ],
+      "presentation": "Group related local actions in a labelled toolbar. Action order MUST be stable and every command MUST remain reachable by keyboard or equivalent input."
+    },
+    "menu": {
+      "purpose": "Command or local navigation menu.",
+      "required": [
+        "id",
+        "items"
+      ],
+      "optional": [
+        "trigger",
+        "selection_mode"
+      ],
+      "presentation": "Present commands or local navigation using native menu semantics when modal menu behavior is appropriate. Focus, dismissal and selection MUST follow host conventions."
+    },
+    "breadcrumb": {
+      "purpose": "Navigation path.",
+      "required": [
+        "id",
+        "items"
+      ],
+      "optional": [],
+      "presentation": "Present an ordered navigation path. The current destination SHOULD be identified and normally SHOULD NOT be exposed as a redundant navigation action."
+    },
+    "text": {
+      "purpose": "Plain read-only text or heading.",
+      "required": [
+        "id",
+        "text"
+      ],
+      "optional": [
+        "text_role",
+        "selectable"
+      ],
+      "presentation": "Map text_role to the closest semantic text role, including a real heading when requested. Visual size alone MUST NOT be used to imply semantics."
+    },
+    "valueDisplay": {
+      "purpose": "Prominent time, duration, metric or measurement.",
+      "required": [
+        "id",
+        "text|value"
+      ],
+      "optional": [
+        "label",
+        "description",
+        "unit",
+        "source",
+        "live",
+        "format"
+      ],
+      "presentation": "Give the value suitable prominence while keeping its label, unit, source and live-update behavior available. A spoken representation MUST include enough context to understand the value."
+    },
+    "richText": {
+      "purpose": "Limited semantic formatted content.",
+      "required": [
+        "id",
+        "content"
+      ],
+      "optional": [
+        "format",
+        "language"
+      ],
+      "presentation": "Render only the declared limited semantic format. Publisher HTML, script, style and unsafe links MUST NOT be executed or passed through."
+    },
+    "codeBlock": {
+      "purpose": "Code, logs or command output.",
+      "required": [
+        "id",
+        "text"
+      ],
+      "optional": [
+        "language",
+        "copy_action"
+      ],
+      "presentation": "Preserve whitespace and expose the content as code or preformatted output. Long lines MUST remain readable through wrapping, scrolling or an equivalent presentation, and copy_action SHOULD be offered when declared."
+    },
+    "link": {
+      "purpose": "Navigation to a resource.",
+      "required": [
+        "id",
+        "label",
+        "href"
+      ],
+      "optional": [
+        "description",
+        "rel",
+        "type",
+        "external",
+        "download"
+      ],
+      "presentation": "Present as a focusable navigation link that activates inside the current LUMUI client unless policy or the external flag requires otherwise. Keyboard activation MUST work without a modifier key."
+    },
+    "quote": {
+      "purpose": "Quotation with optional attribution.",
+      "required": [
+        "id",
+        "text"
+      ],
+      "optional": [
+        "attribution",
+        "cite",
+        "language"
+      ],
+      "presentation": "Present as a quotation distinct from surrounding prose and associate attribution and citation when supplied. Assistive output MUST identify the quoted content before its attribution."
+    },
+    "image": {
+      "purpose": "Single image.",
+      "required": [
+        "id",
+        "source",
+        "alt"
+      ],
+      "optional": [
+        "caption",
+        "intrinsic_aspect_ratio",
+        "action",
+        "sensitive",
+        "decorative",
+        "variants"
+      ],
+      "presentation": "Render the best supported source or variant while respecting intrinsic aspect ratio. Meaningful images MUST expose alt text; decorative images MUST be omitted from accessibility output; sensitive images MUST follow privacy policy."
+    },
+    "figure": {
+      "purpose": "Self-contained content with caption.",
+      "required": [
+        "id",
+        "content"
+      ],
+      "optional": [
+        "caption",
+        "credit",
+        "source_link"
+      ],
+      "presentation": "Keep content, caption, credit and source link as one semantic figure. Caption and credit MUST remain associated when the layout changes."
+    },
+    "imageCollection": {
+      "purpose": "Related images.",
+      "required": [
+        "id",
+        "images"
+      ],
+      "optional": [
+        "selection_mode",
+        "current_index",
+        "caption"
+      ],
+      "fallback": "sequential image or captions",
+      "presentation": "Present an accessible gallery, carousel or sequential collection with stable item order and current position. Every image and selection action MUST be reachable without pointer-only gestures."
+    },
+    "icon": {
+      "purpose": "Small symbolic image.",
+      "required": [
+        "id",
+        "symbol|source",
+        "meaning"
+      ],
+      "optional": [
+        "decorative"
+      ],
+      "presentation": "Render the registered symbol or image without changing its meaning. Non-decorative icons MUST expose meaning and MUST NOT be the sole carrier of an action label or state."
+    },
+    "badge": {
+      "purpose": "Compact count or state label.",
+      "required": [
+        "id",
+        "label"
+      ],
+      "optional": [
+        "value",
+        "tone"
+      ],
+      "presentation": "Present the label and optional value as a compact annotation. Tone or color MUST NOT be the only indication of the badge state."
+    },
+    "status": {
+      "purpose": "Semantic state display.",
+      "required": [
+        "id",
+        "label",
+        "state"
+      ],
+      "optional": [
+        "state_description",
+        "tone",
+        "live"
+      ],
+      "presentation": "Expose label, state and state description together. Tone MAY reinforce the state but MUST NOT replace text, and live announcements MUST use the declared live policy."
+    },
+    "chart": {
+      "purpose": "Data visualization.",
+      "required": [
+        "id",
+        "chart_type",
+        "data",
+        "summary"
+      ],
+      "optional": [
+        "table_fallback",
+        "axes",
+        "series",
+        "actions"
+      ],
+      "fallback": "table or summary",
+      "presentation": "Provide the visual chart together with its summary and a data table or equivalent accessible fallback. Color, shape and position MUST NOT be the only way to distinguish series."
+    },
+    "button": {
+      "purpose": "User-triggered operation.",
+      "required": [
+        "id",
+        "label",
+        "action"
+      ],
+      "optional": [
+        "confirmation",
+        "icon"
+      ],
+      "presentation": "Use a native command control with a visible label, focus indication and declared action. Confirmation is viewer-owned and MUST follow the action policy."
+    },
+    "toggle": {
+      "purpose": "Immediate binary setting.",
+      "required": [
+        "id",
+        "label",
+        "value",
+        "action"
+      ],
+      "optional": [],
+      "presentation": "Use a switch or equivalent immediate binary control and announce both label and current state. Activation MUST update only through the declared action."
+    },
+    "checkOption": {
+      "purpose": "Boolean membership in a set.",
+      "required": [
+        "id",
+        "label",
+        "value"
+      ],
+      "optional": [
+        "description",
+        "action",
+        "enabled"
+      ],
+      "presentation": "Use a checkbox-like membership control, normally grouped with related options. Checked, disabled and descriptive states MUST be programmatically available."
+    },
+    "imageOption": {
+      "purpose": "Selectable option with image or swatch.",
+      "required": [
+        "id",
+        "label",
+        "value",
+        "source"
+      ],
+      "optional": [
+        "description",
+        "selected",
+        "action",
+        "enabled"
+      ],
+      "presentation": "Present a selectable tile or swatch with its text label and selected state. The image or color MUST NOT be the only way to identify the option."
+    },
+    "detailOption": {
+      "purpose": "Selectable row with details and trailing value.",
+      "required": [
+        "id",
+        "label"
+      ],
+      "optional": [
+        "description",
+        "text",
+        "value",
+        "selected",
+        "action",
+        "enabled"
+      ],
+      "presentation": "Present a selectable row containing its label, supporting description and trailing text or value. The complete target MUST remain understandable without depending on column position."
+    },
+    "checkBox": {
+      "purpose": "Boolean form selection.",
+      "required": [
+        "id",
+        "label",
+        "value"
+      ],
+      "optional": [
+        "action",
+        "required"
+      ],
+      "presentation": "Use a native form checkbox with associated label, required state and validation. Checked state MUST be available visually and programmatically."
+    },
+    "radioGroup": {
+      "purpose": "Visible one-of-many selection.",
+      "required": [
+        "id",
+        "label",
+        "options",
+        "value"
+      ],
+      "optional": [
+        "action"
+      ],
+      "presentation": "Present the options as one labelled, single-selection group. Native radio-group focus and arrow-key behavior SHOULD be used when available."
+    },
+    "choice": {
+      "purpose": "General one-of-many selection.",
+      "required": [
+        "id",
+        "label",
+        "options",
+        "value",
+        "action"
+      ],
+      "optional": [],
+      "presentation": "Present one-of-many selection as radios, a picker or another native single-selection control appropriate to the context. The selected value and declared action MUST remain explicit."
+    },
+    "multiSelect": {
+      "purpose": "Many-of-many selection.",
+      "required": [
+        "id",
+        "label",
+        "options",
+        "values"
+      ],
+      "optional": [
+        "min_selected",
+        "max_selected",
+        "action"
+      ],
+      "presentation": "Present a labelled multiple-selection control with each option and selected state exposed. Minimum and maximum selection constraints MUST be communicated before they block an action."
+    },
+    "comboBox": {
+      "purpose": "Filter plus constrained selection.",
+      "required": [
+        "id",
+        "label",
+        "options",
+        "value"
+      ],
+      "optional": [
+        "editable",
+        "preview",
+        "filter_mode",
+        "allow_empty",
+        "action"
+      ],
+      "presentation": "Use native combobox semantics with a text or selection control and associated option list. Preview MUST NOT commit a value, and editable behavior MUST remain constrained by the declared policy."
+    },
+    "slider": {
+      "purpose": "Numeric range control.",
+      "required": [
+        "id",
+        "label",
+        "value",
+        "min",
+        "max",
+        "action"
+      ],
+      "optional": [
+        "step",
+        "unit",
+        "display_value",
+        "marks"
+      ],
+      "fallback": "stepper or numeric input",
+      "presentation": "Use a range control that exposes label, current value, minimum, maximum, step and unit. Keyboard increments and a stepper or numeric-input fallback MUST be available."
+    },
+    "stepper": {
+      "purpose": "Increment and decrement numeric value.",
+      "required": [
+        "id",
+        "label",
+        "value",
+        "action"
+      ],
+      "optional": [
+        "min",
+        "max",
+        "step",
+        "unit"
+      ],
+      "presentation": "Present a numeric value with increment and decrement commands and, when possible, direct entry. Boundary commands MUST become unavailable at declared limits."
+    },
+    "rating": {
+      "purpose": "Ordinal rating input.",
+      "required": [
+        "id",
+        "label",
+        "value",
+        "max"
+      ],
+      "optional": [
+        "min",
+        "allow_half",
+        "action"
+      ],
+      "presentation": "Present an ordinal scale whose values have understandable labels. Stars or other symbols MAY be used visually, but the value and range MUST be available without interpreting those symbols."
+    },
+    "textField": {
+      "purpose": "Single-line text entry.",
+      "required": [
+        "id",
+        "label",
+        "value",
+        "action"
+      ],
+      "optional": [
+        "placeholder",
+        "content_type",
+        "keyboard",
+        "autocomplete",
+        "min_length",
+        "max_length",
+        "pattern",
+        "spellcheck",
+        "autocapitalize"
+      ],
+      "presentation": "Use a labelled single-line text input with help, placeholder and validation associated programmatically. Keyboard and content hints MUST NOT replace validation."
+    },
+    "textArea": {
+      "purpose": "Multi-line text entry.",
+      "required": [
+        "id",
+        "label",
+        "value",
+        "action"
+      ],
+      "optional": [
+        "placeholder",
+        "content_extent",
+        "max_length",
+        "spellcheck"
+      ],
+      "presentation": "Use a labelled multiline input. content_extent MAY influence initial size, but the viewer MUST recompose or scroll rather than clip entered content."
+    },
+    "passwordField": {
+      "purpose": "Secret text entry.",
+      "required": [
+        "id",
+        "label",
+        "value_present",
+        "action"
+      ],
+      "optional": [
+        "placeholder",
+        "min_length",
+        "max_length",
+        "rules",
+        "allow_reveal",
+        "password_manager",
+        "autocomplete"
+      ],
+      "forbidden": [
+        "value",
+        "default_value"
+      ],
+      "presentation": "Use a secret-entry control whose default presentation masks every entered character. Entered characters MUST remain viewer-owned transient input and MAY be sent only through the declared action's validated input. Outside an explicitly active reveal state, actual characters MUST NOT be exposed through visual or accessibility output; visual viewers conventionally substitute dots or asterisks. Actual characters MUST never enter surface state, logs, history or previews. A reveal control MAY appear only when allow_reveal is true, MUST require an explicit temporary action, MUST announce its state and MUST return to masked presentation."
+    },
+    "searchField": {
+      "purpose": "Search query entry.",
+      "required": [
+        "id",
+        "label",
+        "value",
+        "action"
+      ],
+      "optional": [
+        "placeholder",
+        "suggestions",
+        "submit_action",
+        "clear_action",
+        "debounce_ms",
+        "result_count"
+      ],
+      "presentation": "Use a search input with reachable submit and clear actions and an associated suggestions presentation. Debounced changes MUST not steal focus, and result_count SHOULD be announced without excessive repetition."
+    },
+    "numberField": {
+      "purpose": "Numeric entry.",
+      "required": [
+        "id",
+        "label",
+        "value",
+        "action"
+      ],
+      "optional": [
+        "min",
+        "max",
+        "step",
+        "unit",
+        "precision",
+        "format",
+        "allow_negative"
+      ],
+      "presentation": "Use a locale-appropriate numeric input while preserving the unambiguous numeric value. Limits, precision, step, unit and validation MUST be exposed before submission."
+    },
+    "dateField": {
+      "purpose": "Date entry.",
+      "required": [
+        "id",
+        "label",
+        "value",
+        "action"
+      ],
+      "optional": [
+        "min",
+        "max",
+        "calendar",
+        "format"
+      ],
+      "presentation": "Use a native date picker or an accessible segmented equivalent. The displayed format MAY be localized, but the submitted value and minimum and maximum constraints MUST remain unambiguous."
+    },
+    "timeField": {
+      "purpose": "Time entry.",
+      "required": [
+        "id",
+        "label",
+        "value",
+        "action"
+      ],
+      "optional": [
+        "min",
+        "max",
+        "format",
+        "step_minutes"
+      ],
+      "presentation": "Use a native time picker or accessible segmented equivalent. Format and step_minutes MUST be reflected in entry and validation."
+    },
+    "dateTimeField": {
+      "purpose": "Combined date and time entry.",
+      "required": [
+        "id",
+        "label",
+        "value",
+        "action"
+      ],
+      "optional": [
+        "min",
+        "max",
+        "timezone"
+      ],
+      "presentation": "Present date and time as one associated value or two clearly linked controls. The timezone MUST be visible or otherwise available whenever it affects interpretation."
+    },
+    "dateRangeField": {
+      "purpose": "Date range entry.",
+      "required": [
+        "id",
+        "label",
+        "start",
+        "end",
+        "action"
+      ],
+      "optional": [
+        "min",
+        "max",
+        "allow_open_end"
+      ],
+      "presentation": "Present start and end as one labelled range with their relationship and validation exposed. An open end MAY be accepted only when allow_open_end permits it."
+    },
+    "colorField": {
+      "purpose": "Color as domain data.",
+      "required": [
+        "id",
+        "label",
+        "value",
+        "action"
+      ],
+      "optional": [
+        "format",
+        "palette",
+        "allow_custom"
+      ],
+      "presentation": "Provide a color picker or palette together with a textual value or name. Color MUST NOT be the sole means of identifying the current choice."
+    },
+    "otpField": {
+      "purpose": "One-time code entry.",
+      "required": [
+        "id",
+        "label",
+        "length",
+        "action"
+      ],
+      "optional": [
+        "value_present",
+        "content_type",
+        "auto_submit"
+      ],
+      "forbidden": [
+        "value",
+        "default_value"
+      ],
+      "presentation": "Present a one-time-code input with the expected length and current position understandable. Codes MUST remain viewer-owned transient input and MAY be sent only through the declared action's validated input. They MUST NOT be published, persisted or exposed in logs, history or previews, and auto submission MUST be announced before it occurs."
+    },
+    "progress": {
+      "purpose": "Task progress.",
+      "required": [
+        "id",
+        "label",
+        "value|indeterminate"
+      ],
+      "optional": [
+        "min",
+        "max",
+        "unit",
+        "live"
+      ],
+      "presentation": "Use a determinate progress indicator when value is supplied and an activity presentation when indeterminate is true. Label and progress state MUST be available without relying on animation."
+    },
+    "meter": {
+      "purpose": "Bounded measurement.",
+      "required": [
+        "id",
+        "label",
+        "value",
+        "min",
+        "max"
+      ],
+      "optional": [
+        "low",
+        "high",
+        "optimum",
+        "unit"
+      ],
+      "presentation": "Use a bounded measurement that exposes value, minimum, maximum, thresholds and optimum. Color MAY reinforce ranges but MUST NOT be their only expression."
+    },
+    "activity": {
+      "purpose": "Indeterminate activity.",
+      "required": [
+        "id",
+        "label"
+      ],
+      "optional": [
+        "description",
+        "live"
+      ],
+      "presentation": "Present ongoing indeterminate work with a readable status label. Reduced-motion preferences MUST replace unnecessary animation while preserving the activity state."
+    },
+    "alert": {
+      "purpose": "Important message.",
+      "required": [
+        "id",
+        "title",
+        "message"
+      ],
+      "optional": [
+        "severity",
+        "actions",
+        "live"
+      ],
+      "presentation": "Present a persistent, prominent message with severity and actions. Live announcement urgency MUST follow the declared live value and MUST not cause repeated interruptions."
+    },
+    "toast": {
+      "purpose": "Temporary low-impact message.",
+      "required": [
+        "id",
+        "message"
+      ],
+      "optional": [
+        "duration_ms",
+        "action"
+      ],
+      "presentation": "Present a non-modal, temporary message without moving focus. It MUST remain available long enough to perceive and operate its action and MUST NOT carry critical information only."
+    },
+    "error": {
+      "purpose": "User-visible error state.",
+      "required": [
+        "id",
+        "title",
+        "message"
+      ],
+      "optional": [
+        "severity",
+        "actions",
+        "correlation_id"
+      ],
+      "presentation": "Present a persistent error heading and message, followed by recovery actions when supplied. Related invalid fields SHOULD be linked, and correlation_id SHOULD remain available for support without dominating the message."
+    },
+    "emptyState": {
+      "purpose": "No-content state.",
+      "required": [
+        "id",
+        "title"
+      ],
+      "optional": [
+        "message",
+        "actions",
+        "illustration"
+      ],
+      "presentation": "Present an explicit no-content state instead of a blank region. The title, message, illustration and available next actions MUST remain associated."
+    },
+    "audio": {
+      "purpose": "Embedded audio content.",
+      "required": [
+        "id",
+        "label",
+        "source"
+      ],
+      "optional": [
+        "description",
+        "transcript",
+        "duration_ms",
+        "preload",
+        "download"
+      ],
+      "fallback": "transcript or download",
+      "presentation": "Present native or equivalent play, pause, seek and volume controls when playback is supported, with transcript and download fallbacks when declared. Controls MUST be keyboard operable."
+    },
+    "audioPlayer": {
+      "purpose": "Audio playback session.",
+      "required": [
+        "id",
+        "label"
+      ],
+      "optional": [
+        "artist",
+        "album",
+        "artwork",
+        "duration_ms",
+        "position_ms",
+        "state",
+        "source",
+        "actions"
+      ],
+      "presentation": "Present a recognizable playback session with play or pause, stop, seek position, duration and relevant metadata. State changes MUST be announced and all declared actions MUST remain reachable."
+    },
+    "video": {
+      "purpose": "Embedded video content.",
+      "required": [
+        "id",
+        "title",
+        "source"
+      ],
+      "optional": [
+        "poster",
+        "captions",
+        "transcript",
+        "audio_description",
+        "intrinsic_aspect_ratio",
+        "variants"
+      ],
+      "fallback": "poster, transcript or link",
+      "presentation": "Present video with native or equivalent playback controls, captions, transcript and audio description when supplied. Aspect ratio MUST be preserved and the declared poster, transcript or link fallback MUST remain usable."
+    },
+    "videoPlayer": {
+      "purpose": "Video playback session.",
+      "required": [
+        "id",
+        "session_id",
+        "title",
+        "source|session"
+      ],
+      "optional": [
+        "captions",
+        "audio_description",
+        "poster",
+        "duration_ms",
+        "position_ms",
+        "state"
+      ],
+      "presentation": "Present the active playback session with play or pause, stop, seek, elapsed and total time, captions and fullscreen or equivalent viewing when supported. Session state MUST remain synchronized with declared actions."
+    },
+    "calendar": {
+      "purpose": "App-supplied date grid.",
+      "required": [
+        "id",
+        "children"
+      ],
+      "optional": [
+        "label",
+        "options"
+      ],
+      "fallback": "date list",
+      "presentation": "Present the supplied dates using an accessible calendar grid when supported, including date labels, selection and keyboard movement. A chronological date list MUST be available as fallback."
+    },
+    "mediaPicker": {
+      "purpose": "System-mediated media selection.",
+      "required": [
+        "id",
+        "label",
+        "action"
+      ],
+      "optional": [
+        "media_types",
+        "selection_mode"
+      ],
+      "presentation": "Open a trusted system-mediated media picker and explain the requested media types and selection mode. Publisher content MUST NOT imitate trusted permission or picker chrome."
+    },
+    "map": {
+      "purpose": "Geospatial display or selection.",
+      "required": [
+        "id",
+        "mode"
+      ],
+      "optional": [
+        "center",
+        "markers",
+        "route",
+        "current_location",
+        "action"
+      ],
+      "fallback": "navigationSummary or location list",
+      "presentation": "Present geographic content with keyboard-accessible controls and a textual list or route summary. Location, markers and selection MUST remain usable without seeing or manipulating the map."
+    },
+    "navigation": {
+      "purpose": "Route guidance.",
+      "required": [
+        "id",
+        "destination",
+        "route_summary"
+      ],
+      "optional": [
+        "current_step",
+        "distance_remaining",
+        "eta",
+        "maneuvers"
+      ],
+      "presentation": "Present the current maneuver, remaining distance, estimated arrival and route context with concise visual, spoken or haptic output. Guidance MUST NOT rely on the map alone."
+    },
+    "locationPicker": {
+      "purpose": "System-mediated location selection.",
+      "required": [
+        "id",
+        "label",
+        "action"
+      ],
+      "optional": [
+        "mode",
+        "requires_capabilities"
+      ],
+      "presentation": "Use a trusted permission and location-selection surface, show the selected location textually and require an explicit action before sharing it."
+    },
+    "dialer": {
+      "purpose": "Phone keypad or call control.",
+      "required": [
+        "id",
+        "mode"
+      ],
+      "optional": [
+        "number",
+        "contact",
+        "call_state",
+        "actions"
+      ],
+      "presentation": "Present a recognizable telephone keypad or call-control surface with large operable targets and announced call state. Starting or ending a call MUST use explicit declared actions."
+    },
+    "contactPicker": {
+      "purpose": "System-mediated contact selection.",
+      "required": [
+        "id",
+        "label",
+        "action"
+      ],
+      "optional": [],
+      "presentation": "Use a trusted system-mediated contact selector and disclose the requested result before selection. Only the fields required by the action SHOULD be returned."
+    },
+    "filePicker": {
+      "purpose": "System-mediated file selection.",
+      "required": [
+        "id",
+        "label",
+        "action"
+      ],
+      "optional": [
+        "accept",
+        "selection_mode",
+        "intent",
+        "target",
+        "copy_policy"
+      ],
+      "presentation": "Use a trusted system file selector that enforces accepted types, selection mode and intent. Selected file names and any copy or upload consequence MUST be shown before action submission."
+    },
+    "dialog": {
+      "purpose": "Modal app decision.",
+      "required": [
+        "id",
+        "title",
+        "message|items",
+        "actions"
+      ],
+      "optional": [],
+      "presentation": "Present as a modal decision with title, message or items and clearly ordered actions. Focus MUST enter the dialog, remain within it while modal and return to the invoking control when dismissed."
+    },
+    "notification": {
+      "purpose": "Content submitted to a trusted notification surface.",
+      "required": [
+        "id",
+        "title",
+        "body"
+      ],
+      "optional": [
+        "category",
+        "actions",
+        "priority",
+        "expires_at",
+        "sensitive"
+      ],
+      "presentation": "Submit content to a trusted notification surface with accessible actions and priority. Sensitive content MUST be redacted according to lock-screen and user privacy policy."
+    },
+    "graphic": {
+      "purpose": "Sandboxed specialized graphics container.",
+      "required": [
+        "id",
+        "label",
+        "purpose",
+        "renderer",
+        "source",
+        "fallback"
+      ],
+      "optional": [
+        "state_schema",
+        "actions",
+        "integrity",
+        "capabilities"
+      ],
+      "presentation": "Run only a registered sandboxed renderer with declared capabilities and integrity policy. An equivalent semantic fallback MUST be available before the specialized graphic is exposed."
+    },
+    "preview": {
+      "purpose": "Displays a component in its own preview area.",
+      "required": [
+        "id",
+        "content"
+      ],
+      "optional": [
+        "label",
+        "description"
+      ],
+      "fallback": "render content without the preview layout",
+      "presentation": "Present the contained component in a distinct preview area. The renderer MAY choose a preview-specific layout and MUST preserve the contained component's semantics, state and actions. It MUST NOT interpret preview as a request to load another surface or change the render context."
+    },
+    "clock": {
+      "purpose": "Current time or declared time value.",
+      "required": [
+        "id",
+        "label"
+      ],
+      "optional": [
+        "timezone"
+      ],
+      "fallback": "valueDisplay",
+      "presentation": "Present the declared value, or the viewer's current time when value is absent, as a clock. Analog, digital and spoken forms are equivalent when the label, timezone and exact time remain available. Live updates MUST NOT disrupt focus or cause excessive announcements."
+    }
+  }
+}

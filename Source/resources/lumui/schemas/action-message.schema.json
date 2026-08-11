@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lumuiopensource.com/specification/schemas/action-message.schema.json",
+  "title": "LUMUI Action Message",
+  "oneOf": [
+    { "$ref": "#/$defs/invoke" },
+    { "$ref": "#/$defs/result" }
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "invoke": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lumui_message",
+        "message_id",
+        "message_type",
+        "surface_id",
+        "revision",
+        "component_id",
+        "action_id",
+        "input"
+      ],
+      "properties": {
+        "lumui_message": { "const": "1.0" },
+        "message_id": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+        },
+        "message_type": { "const": "action.invoke" },
+        "surface_id": { "$ref": "#/$defs/id" },
+        "revision": { "type": "integer", "minimum": 1 },
+        "component_id": { "$ref": "#/$defs/id" },
+        "action_id": { "$ref": "#/$defs/id" },
+        "input": { "$ref": "#/$defs/jsonValue" },
+        "confirmed": { "type": "boolean" },
+        "confirmation_token": { "type": "string", "minLength": 16, "maxLength": 4096 },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "enum": ["user", "system", "automation", "assistive"] },
+            "render_profile": { "type": "string" },
+            "input_method": { "type": "string" }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "confirmed": { "const": true } },
+            "required": ["confirmed"]
+          },
+          "then": { "required": ["confirmation_token"] }
+        }
+      ]
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lumui_message", "message_type", "correlation_id", "status", "status_code"],
+      "properties": {
+        "lumui_message": { "const": "1.0" },
+        "message_type": { "const": "action.result" },
+        "correlation_id": { "type": ["string", "null"] },
+        "status": {
+          "enum": [
+            "completed",
+            "accepted_async",
+            "failed",
+            "rejected",
+            "requires_permission",
+            "requires_confirmation"
+          ]
+        },
+        "status_code": { "type": "integer" },
+        "surface": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["href", "revision"],
+          "properties": {
+            "href": { "type": "string", "format": "uri-reference" },
+            "revision": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "redirect": { "type": "string", "format": "uri-reference" },
+        "status_resource": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["href", "type"],
+          "properties": {
+            "href": { "type": "string", "format": "uri-reference" },
+            "type": { "const": "application/lumui+json" },
+            "poll_after_ms": { "type": "integer", "minimum": 250, "maximum": 60000 },
+            "expires_at": { "type": "string", "format": "date-time" }
+          }
+        },
+        "confirmation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "action_id", "token", "expires_at"],
+          "properties": {
+            "kind": { "enum": ["explicit", "dangerous"] },
+            "action_id": { "$ref": "#/$defs/id" },
+            "token": { "type": "string", "minLength": 16, "maxLength": 4096 },
+            "expires_at": { "type": "string", "format": "date-time" }
+          }
+        },
+        "result": { "$ref": "#/$defs/jsonValue" },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "code", "severity"],
+            "properties": {
+              "path": { "type": "string", "maxLength": 512 },
+              "code": { "type": "integer" },
+              "severity": { "enum": ["info", "warning", "error"] },
+              "message": { "type": "string", "maxLength": 2000 }
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "status": { "const": "requires_confirmation" } },
+            "required": ["status"]
+          },
+          "then": { "required": ["confirmation"] }
+        },
+        {
+          "if": {
+            "properties": { "status": { "const": "accepted_async" } },
+            "required": ["status"]
+          },
+          "then": { "required": ["status_resource"] }
+        }
+      ]
+    },
+    "jsonValue": {
+      "oneOf": [
+        { "type": ["string", "number", "boolean", "null"] },
+        { "type": "array", "items": { "$ref": "#/$defs/jsonValue" } },
+        {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/jsonValue" }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,239 @@
+<UserControl
+    x:Class="Lumui.Browser.Views.PersonalizationPanel"
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Lumui.Browser.Controls"
+    xmlns:rendering="using:Lumui.Browser.Rendering"
+    AutomationProperties.Name="Reading and display">
+  <UserControl.Styles>
+    <Style Selector="Grid.reading-root">
+      <Setter Property="Background" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="TextBlock.reading-eyebrow">
+      <Setter Property="FontSize" Value="11" />
+      <Setter Property="FontWeight" Value="Bold" />
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="LetterSpacing" Value="1.4" />
+    </Style>
+    <Style Selector="TextBlock.reading-description">
+      <Setter Property="FontSize" Value="14" />
+      <Setter Property="Foreground" Value="#5A5A5A" />
+      <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <Style Selector="TextBlock.reading-heading">
+      <Setter Property="FontSize" Value="38" />
+      <Setter Property="FontWeight" Value="Light" />
+      <Setter Property="Foreground" Value="#111111" />
+    </Style>
+    <Style Selector="TextBlock.reading-label">
+      <Setter Property="FontSize" Value="15" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="Foreground" Value="#111111" />
+    </Style>
+    <Style Selector="TextBlock.reading-help">
+      <Setter Property="Margin" Value="0,3,0,0" />
+      <Setter Property="FontSize" Value="13" />
+      <Setter Property="Foreground" Value="#5A5A5A" />
+      <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <Style Selector="Border.reading-row">
+      <Setter Property="MinHeight" Value="82" />
+      <Setter Property="Padding" Value="0,17" />
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="0,0,0,1" />
+    </Style>
+    <Style Selector="ComboBox.reading-control">
+      <Setter Property="Width" Value="230" />
+      <Setter Property="MinHeight" Value="42" />
+      <Setter Property="HorizontalAlignment" Value="Right" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="ToggleSwitch.reading-control">
+      <Setter Property="HorizontalAlignment" Value="Right" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+      <Setter Property="OnContent" Value="" />
+      <Setter Property="OffContent" Value="" />
+    </Style>
+    <Style Selector="Button.text-step">
+      <Setter Property="Width" Value="42" />
+      <Setter Property="MinWidth" Value="42" />
+      <Setter Property="Height" Value="42" />
+      <Setter Property="MinHeight" Value="42" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="Background" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="Button.text-step:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#EDEDED" />
+    </Style>
+    <Style Selector="controls|FontAwesomeIcon.text-step-icon">
+      <Setter Property="Foreground" Value="#111111" />
+    </Style>
+    <Style Selector="Grid.reading-root.dark">
+      <Setter Property="Background" Value="#000000" />
+    </Style>
+    <Style Selector="Grid.reading-root.dark TextBlock.reading-heading">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.reading-root.dark TextBlock.reading-label">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.reading-root.dark TextBlock.reading-description">
+      <Setter Property="Foreground" Value="#C8C8C8" />
+    </Style>
+    <Style Selector="Grid.reading-root.dark TextBlock.reading-help">
+      <Setter Property="Foreground" Value="#C8C8C8" />
+    </Style>
+    <Style Selector="Grid.reading-root.dark TextBlock.reading-eyebrow">
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentLightBrush}" />
+    </Style>
+    <Style Selector="Grid.reading-root.dark Border.reading-row">
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Grid.reading-root.dark Button.text-step">
+      <Setter Property="Background" Value="#1C1C1C" />
+      <Setter Property="BorderBrush" Value="#626262" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.reading-root.dark Button.text-step:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#2A2A2A" />
+    </Style>
+    <Style Selector="Grid.reading-root.dark controls|FontAwesomeIcon.text-step-icon">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.reading-root.high-contrast">
+      <Setter Property="Background" Value="#000000" />
+    </Style>
+    <Style Selector="Grid.reading-root.high-contrast Border.reading-row">
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.reading-root.high-contrast TextBlock.reading-heading">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.reading-root.high-contrast TextBlock.reading-label">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.reading-root.high-contrast TextBlock.reading-description">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.reading-root.high-contrast TextBlock.reading-help">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.reading-root.high-contrast TextBlock.reading-eyebrow">
+      <Setter Property="Foreground" Value="#FFF200" />
+    </Style>
+    <Style Selector="Grid.reading-root.high-contrast controls|FontAwesomeIcon.text-step-icon">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.reading-root.high-contrast Button.text-step">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Grid.reading-root.high-contrast Button.text-step:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#333333" />
+    </Style>
+  </UserControl.Styles>
+
+  <Grid x:Name="ReadingRoot" Classes="reading-root">
+    <Grid>
+      <ScrollViewer x:Name="TextPage" Padding="36,30" VerticalScrollBarVisibility="Auto">
+        <StackPanel MaxWidth="720" HorizontalAlignment="Left">
+          <TextBlock Classes="reading-eyebrow" Text="READING AND DISPLAY" />
+          <TextBlock Margin="0,5,0,0" Classes="reading-heading" Text="Text" />
+          <TextBlock Margin="0,5,0,14" Classes="reading-description" Text="Adjust the size, typeface and reading flow." />
+          <Border Classes="reading-row">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="28">
+              <StackPanel><TextBlock Classes="reading-label" Text="Text size" /><TextBlock Classes="reading-help" Text="Resize text and let the page reflow." /></StackPanel>
+              <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                <Button x:Name="TextSizeDownButton" Classes="text-step" AutomationProperties.Name="Decrease page text size">
+                  <controls:FontAwesomeIcon Classes="text-step-icon" Icon="{x:Static rendering:BrowserIcons.ZoomOut}" IconSize="14" />
+                </Button>
+                <TextBlock x:Name="TextSizeValue" Width="62" VerticalAlignment="Center" TextAlignment="Center" FontWeight="SemiBold" />
+                <Button x:Name="TextSizeUpButton" Classes="text-step" AutomationProperties.Name="Increase page text size">
+                  <controls:FontAwesomeIcon Classes="text-step-icon" Icon="{x:Static rendering:BrowserIcons.ZoomIn}" IconSize="14" />
+                </Button>
+              </StackPanel>
+            </Grid>
+          </Border>
+          <Border Classes="reading-row">
+            <Grid ColumnDefinitions="*,230" ColumnSpacing="28">
+              <StackPanel><TextBlock Classes="reading-label" Text="Font" /><TextBlock Classes="reading-help" Text="Choose any installed font." /></StackPanel>
+              <ComboBox x:Name="FontBox" Grid.Column="1" Classes="reading-control" AutomationProperties.Name="Page font" />
+            </Grid>
+          </Border>
+          <Border Classes="reading-row">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="28">
+              <StackPanel><TextBlock Classes="reading-label" Text="Bionic reading" /><TextBlock Classes="reading-help" Text="Emphasize the start of words." /></StackPanel>
+              <ToggleSwitch x:Name="BionicReadingToggle" Grid.Column="1" Classes="reading-control" AutomationProperties.Name="Bionic reading" />
+            </Grid>
+          </Border>
+          <Border Classes="reading-row">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="28">
+              <StackPanel><TextBlock Classes="reading-label" Text="Reading view" /><TextBlock Classes="reading-help" Text="Use a clear, linear reading order." /></StackPanel>
+              <ToggleSwitch x:Name="SimpleReadingToggle" Grid.Column="1" Classes="reading-control" AutomationProperties.Name="Simple reading view" />
+            </Grid>
+          </Border>
+          <Button x:Name="ResetButton" Margin="0,22,0,0" HorizontalAlignment="Left" Content="Restore defaults" IsVisible="False" />
+        </StackPanel>
+      </ScrollViewer>
+
+      <ScrollViewer x:Name="ColorsPage" IsVisible="False" Padding="36,30" VerticalScrollBarVisibility="Auto">
+        <StackPanel MaxWidth="720" HorizontalAlignment="Left">
+          <TextBlock Classes="reading-eyebrow" Text="READING AND DISPLAY" />
+          <TextBlock Margin="0,5,0,0" Classes="reading-heading" Text="Colors" />
+          <TextBlock Margin="0,5,0,14" Classes="reading-description" Text="Choose a theme and keep important colors distinct." />
+          <Border Classes="reading-row">
+            <Grid ColumnDefinitions="*,230" ColumnSpacing="28">
+              <StackPanel><TextBlock Classes="reading-label" Text="Theme" /><TextBlock Classes="reading-help" Text="Choose a light or dark page." /></StackPanel>
+              <ComboBox x:Name="ThemeBox" Grid.Column="1" Classes="reading-control" AutomationProperties.Name="Page theme" />
+            </Grid>
+          </Border>
+          <Border Classes="reading-row">
+            <Grid ColumnDefinitions="*,230" ColumnSpacing="28">
+              <StackPanel><TextBlock Classes="reading-label" Text="Accent color" /><TextBlock Classes="reading-help" Text="Choose the highlight used by Lumi and rendered pages." /></StackPanel>
+              <ComboBox x:Name="AccentColorBox" Grid.Column="1" Classes="reading-control" AutomationProperties.Name="Accent color" />
+            </Grid>
+          </Border>
+          <Border Classes="reading-row">
+            <Grid ColumnDefinitions="*,230" ColumnSpacing="28">
+              <StackPanel><TextBlock Classes="reading-label" Text="Color vision" /><TextBlock Classes="reading-help" Text="Keep important colors easy to distinguish." /></StackPanel>
+              <ComboBox x:Name="ColorVisionBox" Grid.Column="1" Classes="reading-control" AutomationProperties.Name="Color vision" />
+            </Grid>
+          </Border>
+          <Border Classes="reading-row">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="28">
+              <StackPanel><TextBlock Classes="reading-label" Text="High contrast" /><TextBlock Classes="reading-help" Text="Strengthen text and control boundaries." /></StackPanel>
+              <ToggleSwitch x:Name="HighContrastToggle" Grid.Column="1" Classes="reading-control" AutomationProperties.Name="High contrast" />
+            </Grid>
+          </Border>
+        </StackPanel>
+      </ScrollViewer>
+
+      <ScrollViewer x:Name="ComfortPage" IsVisible="False" Padding="36,30" VerticalScrollBarVisibility="Auto">
+        <StackPanel MaxWidth="720" HorizontalAlignment="Left">
+          <TextBlock Classes="reading-eyebrow" Text="READING AND DISPLAY" />
+          <TextBlock Margin="0,5,0,0" Classes="reading-heading" Text="Comfort" />
+          <TextBlock Margin="0,5,0,14" Classes="reading-description" Text="Reduce distractions and simplify decisions." />
+          <Border Classes="reading-row">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="28">
+              <StackPanel><TextBlock Classes="reading-label" Text="Reduce motion" /><TextBlock Classes="reading-help" Text="Avoid decorative movement." /></StackPanel>
+              <ToggleSwitch x:Name="ReducedMotionToggle" Grid.Column="1" Classes="reading-control" AutomationProperties.Name="Reduce motion" />
+            </Grid>
+          </Border>
+          <Border Classes="reading-row">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="28">
+              <StackPanel><TextBlock Classes="reading-label" Text="Guided mode" /><TextBlock Classes="reading-help" Text="Use larger controls and shorter steps." /></StackPanel>
+              <ToggleSwitch x:Name="SeniorModeToggle" Grid.Column="1" Classes="reading-control" AutomationProperties.Name="Guided mode" />
+            </Grid>
+          </Border>
+        </StackPanel>
+      </ScrollViewer>
+    </Grid>
+  </Grid>
+</UserControl>

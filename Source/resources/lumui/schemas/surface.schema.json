@@ -1,0 +1,2518 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lumuiopensource.com/specification/schemas/surface.schema.json",
+  "title": "LUMUI Document",
+  "description": "Normative closed schema for a LUMUI 1.0 document. Per-kind component fields are selected by /specification/component-catalog.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "lumui_surface",
+    "app_id",
+    "surface_id",
+    "revision",
+    "mode",
+    "title",
+    "pages",
+    "actions"
+  ],
+  "properties": {
+    "lumui_surface": {
+      "const": "1.0"
+    },
+    "app_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "surface_id": {
+      "$ref": "#/$defs/id"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "mode": {
+      "enum": [
+        "primary",
+        "overlay",
+        "dialog",
+        "notification",
+        "background",
+        "media",
+        "navigation",
+        "keyboardAccessory",
+        "fullscreen"
+      ]
+    },
+    "title": {
+      "$ref": "#/$defs/localizedString"
+    },
+    "description": {
+      "$ref": "#/$defs/localizedString"
+    },
+    "locale": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 35
+    },
+    "direction": {
+      "enum": [
+        "ltr",
+        "rtl",
+        "auto"
+      ]
+    },
+    "identity": {
+      "$ref": "#/$defs/identity"
+    },
+    "requested_page_id": {
+      "$ref": "#/$defs/id"
+    },
+    "pages": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 50,
+      "items": {
+        "$ref": "#/$defs/page"
+      }
+    },
+    "actions": {
+      "type": "object",
+      "maxProperties": 500,
+      "propertyNames": {
+        "$ref": "#/$defs/id"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/actionDefinition"
+      }
+    },
+    "navigation": {
+      "$ref": "#/$defs/navigation"
+    },
+    "state": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/jsonValue"
+      }
+    },
+    "permissions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "priority": {
+      "$ref": "#/$defs/priority"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "etag": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/linkObject"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/jsonValue"
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "localizedString": {
+      "oneOf": [
+        {
+          "type": "string",
+          "maxLength": 2000
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ref"
+          ],
+          "properties": {
+            "ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            },
+            "fallback": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "parameters": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/jsonValue"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "priority": {
+      "enum": [
+        "critical",
+        "high",
+        "normal",
+        "low"
+      ]
+    },
+    "sensitivity": {
+      "enum": [
+        "public",
+        "personal",
+        "private",
+        "secret",
+        "regulated"
+      ]
+    },
+    "live": {
+      "enum": [
+        "off",
+        "polite",
+        "assertive"
+      ]
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "home"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "short_name": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "home": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "logo": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source",
+            "alt"
+          ],
+          "properties": {
+            "source": {
+              "type": "string",
+              "format": "uri-reference"
+            },
+            "alt": {
+              "$ref": "#/$defs/localizedString"
+            },
+            "type": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            },
+            "variants": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/identityAsset"
+              }
+            }
+          }
+        },
+        "icon": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source",
+            "alt"
+          ],
+          "properties": {
+            "source": {
+              "type": "string",
+              "format": "uri-reference"
+            },
+            "alt": {
+              "$ref": "#/$defs/localizedString"
+            },
+            "type": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            },
+            "variants": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/identityAsset"
+              }
+            }
+          }
+        },
+        "brand": {
+          "$ref": "#/$defs/brandIdentity"
+        },
+        "copyright_holder": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "copyright_start_year": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 9999
+        }
+      }
+    },
+    "page": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "regions"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "description": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "role": {
+          "enum": [
+            "home",
+            "application",
+            "detail",
+            "settings",
+            "form",
+            "media",
+            "navigation",
+            "search",
+            "article",
+            "documentation",
+            "reference",
+            "demonstration",
+            "error",
+            "empty",
+            "confirmation"
+          ]
+        },
+        "regions": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "$ref": "#/$defs/region"
+          }
+        },
+        "primary_action": {
+          "$ref": "#/$defs/id"
+        },
+        "secondary_actions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "back_behavior": {
+          "enum": [
+            "auto",
+            "previous",
+            "home",
+            "close",
+            "blocked"
+          ]
+        },
+        "priority": {
+          "$ref": "#/$defs/priority"
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        }
+      }
+    },
+    "region": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "items"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "enum": [
+            "section",
+            "form",
+            "list",
+            "grid",
+            "table",
+            "tree",
+            "tabs",
+            "toolbar",
+            "menu",
+            "media",
+            "map"
+          ]
+        },
+        "label": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "description": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "role": {
+          "enum": [
+            "introduction",
+            "summary",
+            "problem",
+            "comparison",
+            "features",
+            "steps",
+            "examples",
+            "callToAction",
+            "reference",
+            "supporting"
+          ]
+        },
+        "items": {
+          "type": "array",
+          "maxItems": 500,
+          "items": {
+            "$ref": "#/$defs/component"
+          }
+        },
+        "priority": {
+          "$ref": "#/$defs/priority"
+        },
+        "collapsible": {
+          "type": "boolean"
+        },
+        "landmark": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        }
+      }
+    },
+    "componentKind": {
+      "enum": [
+        "page",
+        "section",
+        "form",
+        "list",
+        "optionBar",
+        "grid",
+        "table",
+        "tree",
+        "tabs",
+        "toolbar",
+        "menu",
+        "breadcrumb",
+        "text",
+        "valueDisplay",
+        "richText",
+        "codeBlock",
+        "link",
+        "quote",
+        "image",
+        "figure",
+        "imageCollection",
+        "icon",
+        "badge",
+        "status",
+        "chart",
+        "button",
+        "toggle",
+        "checkOption",
+        "imageOption",
+        "detailOption",
+        "checkBox",
+        "radioGroup",
+        "choice",
+        "multiSelect",
+        "comboBox",
+        "slider",
+        "stepper",
+        "rating",
+        "textField",
+        "textArea",
+        "passwordField",
+        "searchField",
+        "numberField",
+        "dateField",
+        "timeField",
+        "dateTimeField",
+        "dateRangeField",
+        "colorField",
+        "otpField",
+        "progress",
+        "meter",
+        "activity",
+        "alert",
+        "toast",
+        "error",
+        "emptyState",
+        "audio",
+        "audioPlayer",
+        "video",
+        "videoPlayer",
+        "calendar",
+        "mediaPicker",
+        "map",
+        "navigation",
+        "locationPicker",
+        "dialer",
+        "contactPicker",
+        "filePicker",
+        "dialog",
+        "notification",
+        "graphic",
+        "clock",
+        "preview"
+      ]
+    },
+    "component": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id",
+          "description": "Stable component identifier within the surface."
+        },
+        "kind": {
+          "$ref": "#/$defs/componentKind",
+          "description": "Registered component kind that selects its semantic contract."
+        },
+        "label": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Primary human-readable name of the component."
+        },
+        "description": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Supporting explanation of the component or its current value."
+        },
+        "help": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Additional guidance available on request."
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether the person may currently operate the component."
+        },
+        "visible": {
+          "type": "boolean",
+          "description": "Whether the component participates in the current presentation."
+        },
+        "priority": {
+          "$ref": "#/$defs/priority",
+          "description": "Semantic importance used during composition and disclosure."
+        },
+        "sensitive": {
+          "$ref": "#/$defs/sensitivity",
+          "description": "Sensitivity classification used by privacy and output policy."
+        },
+        "live": {
+          "$ref": "#/$defs/live",
+          "description": "Requested assistive announcement behavior for updates."
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Whether a value or selection is required before completion."
+        },
+        "readonly": {
+          "type": "boolean",
+          "description": "Whether the value may be read but not changed."
+        },
+        "value": {
+          "$ref": "#/$defs/jsonValue",
+          "description": "Current scalar, structured or application-defined JSON value."
+        },
+        "default_value": {
+          "$ref": "#/$defs/jsonValue",
+          "description": "Value used when the person has not supplied one."
+        },
+        "text": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Plain or localized textual content."
+        },
+        "content": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 1048576
+            },
+            {
+              "$ref": "#/$defs/component"
+            }
+          ],
+          "description": "Textual or nested semantic content owned by the component."
+        },
+        "alt": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Text alternative that conveys the purpose of non-decorative media."
+        },
+        "caption": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Text associated with and explaining content or media."
+        },
+        "title": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Primary heading or title for the component."
+        },
+        "message": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Human-readable status, feedback or explanatory message."
+        },
+        "body": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Main notification or message body."
+        },
+        "unit": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "Unit associated with a numeric value or measurement."
+        },
+        "min": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Minimum accepted or represented value."
+        },
+        "max": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "Maximum accepted or represented value."
+        },
+        "step": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Permitted numeric increment."
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/jsonValue"
+          },
+          "uniqueItems": true,
+          "description": "Current ordered set of selected or series values."
+        },
+        "start": {
+          "type": "string",
+          "description": "Start value of a range."
+        },
+        "end": {
+          "type": "string",
+          "description": "End value of a range."
+        },
+        "indeterminate": {
+          "type": "boolean",
+          "description": "Whether progress has no measurable current value."
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tableColumn"
+          },
+          "description": "Definitions of table columns and their semantics."
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/jsonValue"
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/jsonValue"
+                }
+              }
+            ]
+          },
+          "description": "Table row values keyed or ordered according to columns."
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/component"
+          },
+          "description": "Root nodes of a hierarchical component collection."
+        },
+        "tabs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/component"
+          },
+          "description": "Peer components exposed as selectable tabs."
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mediaResource"
+          },
+          "description": "Ordered media resources in an image collection."
+        },
+        "summary": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Accessible textual summary of complex content."
+        },
+        "table_fallback": {
+          "$ref": "#/$defs/component",
+          "description": "Tabular semantic fallback for a data visualization."
+        },
+        "action": {
+          "$ref": "#/$defs/id",
+          "description": "ID of the declared action invoked by the component."
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true,
+          "description": "Ordered IDs of declared actions offered by the component."
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/component"
+          },
+          "description": "Ordered nested components contained by the component."
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/component"
+          },
+          "description": "Ordered child components owned by the component."
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/option"
+          },
+          "description": "Available choices or commands represented as option objects."
+        },
+        "source": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uri-reference"
+            },
+            {
+              "$ref": "#/$defs/mediaResource"
+            }
+          ],
+          "description": "URI or typed media resource supplying component content."
+        },
+        "href": {
+          "type": "string",
+          "format": "uri-reference",
+          "description": "Navigation target URI reference."
+        },
+        "external": {
+          "type": "boolean",
+          "description": "Whether navigation intentionally leaves the current application context."
+        },
+        "role": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "Semantic role used for structure or assistive presentation."
+        },
+        "format": {
+          "enum": [
+            "plain",
+            "markdown"
+          ],
+          "description": "Declared safe text format."
+        },
+        "content_extent": {
+          "enum": [
+            "tiny",
+            "small",
+            "medium",
+            "large"
+          ],
+          "description": "Expected content volume used for initial composition."
+        },
+        "intrinsic_aspect_ratio": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*:[1-9][0-9]*$",
+          "description": "Natural width-to-height proportion of media."
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mediaResource"
+          },
+          "description": "Alternative media resources for capability or density selection."
+        },
+        "accept": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "uniqueItems": true
+            }
+          ],
+          "description": "Accepted media types or file patterns."
+        },
+        "album": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Album or collection associated with audio."
+        },
+        "allow_custom": {
+          "type": "boolean",
+          "description": "Whether a person may choose a value outside the supplied palette."
+        },
+        "allow_empty": {
+          "type": "boolean",
+          "description": "Whether no selection is a valid state."
+        },
+        "allow_half": {
+          "type": "boolean",
+          "description": "Whether half-step rating values are permitted."
+        },
+        "allow_negative": {
+          "type": "boolean",
+          "description": "Whether negative numeric values are permitted."
+        },
+        "allow_open_end": {
+          "type": "boolean",
+          "description": "Whether a date range may omit its end."
+        },
+        "allow_reveal": {
+          "type": "boolean",
+          "description": "Whether a viewer may offer temporary password revelation."
+        },
+        "artist": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Artist or creator associated with audio."
+        },
+        "artwork": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "uri-reference"
+            },
+            {
+              "$ref": "#/$defs/mediaResource"
+            }
+          ],
+          "description": "Artwork URI or media resource associated with playback."
+        },
+        "attribution": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Person or source to whom a quotation is attributed."
+        },
+        "audio_description": {
+          "type": "string",
+          "format": "uri-reference",
+          "description": "URI reference of an audio-description track or resource."
+        },
+        "auto_submit": {
+          "type": "boolean",
+          "description": "Whether complete input invokes submission without a separate command."
+        },
+        "autocapitalize": {
+          "enum": [
+            "none",
+            "sentences",
+            "words",
+            "characters"
+          ],
+          "description": "Requested automatic capitalization behavior."
+        },
+        "autocomplete": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Semantic autocomplete purpose understood by the host."
+        },
+        "axes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/chartAxis"
+          },
+          "description": "Definitions of chart axes."
+        },
+        "back_behavior": {
+          "enum": [
+            "auto",
+            "previous",
+            "home",
+            "close",
+            "blocked"
+          ],
+          "description": "Requested logical behavior when navigating back from a page."
+        },
+        "calendar": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Calendar system used to interpret a date."
+        },
+        "call_state": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Current state of a telephone call."
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "uniqueItems": true,
+          "description": "Capabilities required by a specialized renderer."
+        },
+        "captions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mediaTrack"
+          },
+          "description": "Timed text tracks associated with media."
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Application-defined notification category."
+        },
+        "center": {
+          "$ref": "#/$defs/geoPoint",
+          "description": "Geographic point initially centered by a map."
+        },
+        "chart_type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Semantic visualization form requested for chart data."
+        },
+        "cite": {
+          "type": "string",
+          "format": "uri-reference",
+          "description": "URI reference identifying the source of a quotation."
+        },
+        "clear_action": {
+          "$ref": "#/$defs/id",
+          "description": "Declared action that clears the current value."
+        },
+        "collapsible": {
+          "type": "boolean",
+          "description": "Whether a structural group may be collapsed."
+        },
+        "confirmation": {
+          "enum": [
+            "none",
+            "implicit",
+            "explicit",
+            "dangerous"
+          ],
+          "description": "Confirmation level associated with an offered command."
+        },
+        "contact": {
+          "$ref": "#/$defs/contact",
+          "description": "Structured contact associated with a dialer or communication control."
+        },
+        "content_type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Semantic purpose or domain type of entered content."
+        },
+        "copy_action": {
+          "$ref": "#/$defs/id",
+          "description": "Declared action that copies represented content."
+        },
+        "copy_policy": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Policy describing how a selected file may be copied or retained."
+        },
+        "correlation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "Identifier used to correlate an error with diagnostics or support."
+        },
+        "credit": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Credit associated with media or figure content."
+        },
+        "current_index": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Zero-based index of the currently presented collection item."
+        },
+        "current_location": {
+          "$ref": "#/$defs/geoPoint",
+          "description": "Current geographic point when it is available and permitted."
+        },
+        "current_step": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "$ref": "#/$defs/navigationStep"
+            }
+          ],
+          "description": "Current route step index or structured maneuver."
+        },
+        "data": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/jsonValue"
+          },
+          "description": "Closed or application-defined structured data for the component."
+        },
+        "debounce_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 60000,
+          "description": "Delay before input changes may trigger an action."
+        },
+        "decorative": {
+          "type": "boolean",
+          "description": "Whether media carries no meaning and is omitted from accessibility output."
+        },
+        "destination": {
+          "$ref": "#/$defs/geoPoint",
+          "description": "Geographic destination used for routing or selection."
+        },
+        "dirty": {
+          "type": "boolean",
+          "description": "Whether form values differ from their committed state."
+        },
+        "display_value": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Human-readable representation of a numeric value."
+        },
+        "distance_remaining": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Remaining route distance in the declared unit or convention."
+        },
+        "download": {
+          "type": "boolean",
+          "description": "Whether a downloadable representation should be offered."
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total media, route or message duration in milliseconds."
+        },
+        "editable": {
+          "type": "boolean",
+          "description": "Whether a combobox permits text entry in addition to selection."
+        },
+        "empty": {
+          "$ref": "#/$defs/component",
+          "description": "Semantic component shown when a collection has no items."
+        },
+        "estimated_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Estimated total item count when the exact count is unavailable."
+        },
+        "eta": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Estimated arrival date and time."
+        },
+        "expanded_node_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true,
+          "description": "IDs of tree nodes currently expanded."
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date and time after which content is no longer current."
+        },
+        "filter_mode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Declared option-filtering behavior."
+        },
+        "filterable": {
+          "type": "boolean",
+          "description": "Whether table data supports filtering."
+        },
+        "high": {
+          "type": "number",
+          "description": "Upper threshold of a meter's noteworthy range."
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string",
+              "maxLength": 255
+            },
+            {
+              "$ref": "#/$defs/mediaResource"
+            }
+          ],
+          "description": "Registered symbol name or media resource associated with a command."
+        },
+        "illustration": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "uri-reference"
+            },
+            {
+              "$ref": "#/$defs/mediaResource"
+            },
+            {
+              "$ref": "#/$defs/component"
+            }
+          ],
+          "description": "Decorative or semantic illustration for an empty state."
+        },
+        "integrity": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Integrity metadata used to verify specialized content."
+        },
+        "intent": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Purpose for which a file is selected."
+        },
+        "keyboard": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Preferred virtual keyboard or input layout hint."
+        },
+        "language": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 35,
+          "description": "Language identifier of text, code or media."
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1024,
+          "description": "Expected number of entered characters or code positions."
+        },
+        "low": {
+          "type": "number",
+          "description": "Lower threshold of a meter's noteworthy range."
+        },
+        "maneuvers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/navigationStep"
+          },
+          "description": "Ordered route guidance steps."
+        },
+        "markers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mapMarker"
+          },
+          "description": "Geographic markers displayed or listed by a map."
+        },
+        "marks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/valueMark"
+          },
+          "description": "Named values shown along a range control."
+        },
+        "max_length": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum permitted character count."
+        },
+        "max_selected": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum permitted number of selected options."
+        },
+        "meaning": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Accessible meaning of a symbol or icon."
+        },
+        "media_types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "uniqueItems": true,
+          "description": "Accepted media categories for a system picker."
+        },
+        "min_length": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Minimum permitted character count."
+        },
+        "min_selected": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Minimum required number of selected options."
+        },
+        "mode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Component-specific operating or selection mode."
+        },
+        "number": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "Telephone number represented by a dialer."
+        },
+        "optimum": {
+          "type": "number",
+          "description": "Preferred value or range target of a meter."
+        },
+        "pagination": {
+          "$ref": "#/$defs/pagination",
+          "description": "Current page, page size and navigation references for a collection."
+        },
+        "palette": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "uniqueItems": true,
+          "description": "Permitted or suggested color values."
+        },
+        "password_manager": {
+          "type": "boolean",
+          "description": "Whether password-manager integration is permitted."
+        },
+        "pattern": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "Validation pattern applied to entered text."
+        },
+        "placeholder": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Short input hint shown only while no value is present."
+        },
+        "position_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Current media position in milliseconds."
+        },
+        "poster": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "uri-reference"
+            },
+            {
+              "$ref": "#/$defs/mediaResource"
+            }
+          ],
+          "description": "Poster URI or media resource shown before video playback."
+        },
+        "precision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20,
+          "description": "Maximum or intended number of fractional digits."
+        },
+        "preload": {
+          "enum": [
+            "none",
+            "metadata",
+            "auto"
+          ],
+          "description": "Requested media preloading policy."
+        },
+        "preview": {
+          "type": "boolean",
+          "description": "Whether tentative combobox selection may be previewed."
+        },
+        "primary_action": {
+          "$ref": "#/$defs/id",
+          "description": "Declared primary action associated with a page."
+        },
+        "purpose": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Human-readable purpose of specialized content."
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/component"
+          },
+          "description": "Ordered semantic regions owned by a page."
+        },
+        "rel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Relationship of a link to its current resource."
+        },
+        "renderer": {
+          "$ref": "#/$defs/id",
+          "description": "Registered specialized renderer identifier."
+        },
+        "reorderable": {
+          "type": "boolean",
+          "description": "Whether collection items may be reordered."
+        },
+        "requires_capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "uniqueItems": true,
+          "description": "Host capabilities required before offering a picker or operation."
+        },
+        "reset_action": {
+          "$ref": "#/$defs/id",
+          "description": "Declared action that restores form defaults."
+        },
+        "result_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Current number of search results."
+        },
+        "route": {
+          "$ref": "#/$defs/route",
+          "description": "Structured route displayed by a map."
+        },
+        "route_summary": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Concise textual description of a route."
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/localizedString"
+          },
+          "description": "Human-readable password or input rules."
+        },
+        "secondary_actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true,
+          "description": "Ordered declared secondary actions associated with a page."
+        },
+        "selectable": {
+          "type": "boolean",
+          "description": "Whether read-only content may be selected or copied."
+        },
+        "selected": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "$ref": "#/$defs/id"
+            }
+          ],
+          "description": "Selected state or selected component identifier."
+        },
+        "selection_mode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Whether and how zero, one or many items may be selected."
+        },
+        "series": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/chartSeries"
+          },
+          "description": "Named data series represented by a chart."
+        },
+        "session": {
+          "$ref": "#/$defs/mediaSession",
+          "description": "Structured media playback session state."
+        },
+        "session_id": {
+          "$ref": "#/$defs/id",
+          "description": "Stable identifier of a media playback session."
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "success",
+            "warning",
+            "error",
+            "critical"
+          ],
+          "description": "Semantic urgency or impact of feedback."
+        },
+        "sortable": {
+          "type": "boolean",
+          "description": "Whether table columns may invoke sorting."
+        },
+        "source_link": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "uri-reference"
+            },
+            {
+              "$ref": "#/$defs/linkObject"
+            }
+          ],
+          "description": "URI or link object identifying the source of a figure."
+        },
+        "spellcheck": {
+          "type": "boolean",
+          "description": "Whether host spell checking is requested."
+        },
+        "state": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Current semantic or playback state."
+        },
+        "state_description": {
+          "$ref": "#/$defs/localizedString",
+          "description": "Human-readable explanation of the current state."
+        },
+        "state_schema": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/jsonValue"
+          },
+          "description": "Closed schema describing specialized graphic state."
+        },
+        "step_minutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1440,
+          "description": "Permitted time-entry increment in minutes."
+        },
+        "submit_action": {
+          "$ref": "#/$defs/id",
+          "description": "Declared action that submits a form or query."
+        },
+        "suggestions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/option"
+          },
+          "description": "Suggested option values associated with current input."
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Registered symbolic icon identifier."
+        },
+        "target": {
+          "type": "string",
+          "format": "uri-reference",
+          "description": "Destination URI or storage target of a file operation."
+        },
+        "text_role": {
+          "enum": [
+            "body",
+            "heading",
+            "lead",
+            "label",
+            "caption",
+            "code"
+          ],
+          "description": "Semantic role of text independent of visual styling."
+        },
+        "timezone": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Timezone used to interpret a date and time."
+        },
+        "tone": {
+          "enum": [
+            "neutral",
+            "info",
+            "success",
+            "warning",
+            "danger"
+          ],
+          "description": "Non-exclusive semantic visual tone."
+        },
+        "transcript": {
+          "type": "string",
+          "format": "uri-reference",
+          "description": "URI reference of a textual media transcript."
+        },
+        "trigger": {
+          "$ref": "#/$defs/id",
+          "description": "Component ID that opens or owns a menu."
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "description": "Media, column, link or application-defined type identifier."
+        },
+        "validation_mode": {
+          "enum": [
+            "submit",
+            "change",
+            "blur"
+          ],
+          "description": "Event at which form validation is requested."
+        },
+        "value_present": {
+          "type": "boolean",
+          "description": "Whether a secret or one-time value currently exists without exposing it."
+        },
+        "error": {
+          "$ref": "#/$defs/errorState",
+          "description": "Current user-visible error state associated with the component."
+        },
+        "validation": {
+          "$ref": "#/$defs/validationState",
+          "description": "Current validity and validation message."
+        },
+        "fallback": {
+          "$ref": "#/$defs/component",
+          "description": "Standard semantic component used when specialized rendering is unavailable."
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/jsonValue"
+          },
+          "description": "Application metadata that does not alter standard component meaning."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "preview"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/$defs/component"
+              }
+            },
+            "required": [
+              "content"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "actionDefinition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "callback"
+      ],
+      "properties": {
+        "callback": {
+          "$ref": "#/$defs/id"
+        },
+        "input_schema": {
+          "$ref": "#/$defs/inputSchema"
+        },
+        "confirmation": {
+          "enum": [
+            "none",
+            "implicit",
+            "explicit",
+            "dangerous"
+          ]
+        },
+        "requires_capabilities": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "debounce_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 60000
+        },
+        "idempotent": {
+          "type": "boolean"
+        },
+        "rate_limit": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "max_requests",
+            "window_seconds"
+          ],
+          "properties": {
+            "max_requests": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "window_seconds": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "stale_revision_policy": {
+          "enum": [
+            "reject",
+            "allow",
+            "revalidate"
+          ]
+        }
+      }
+    },
+    "navigation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start_page"
+      ],
+      "properties": {
+        "start_page": {
+          "$ref": "#/$defs/id"
+        },
+        "routes": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "from",
+                  "to",
+                  "action"
+                ],
+                "properties": {
+                  "from": {
+                    "$ref": "#/$defs/id"
+                  },
+                  "to": {
+                    "$ref": "#/$defs/id"
+                  },
+                  "action": {
+                    "$ref": "#/$defs/id"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "label",
+                  "href",
+                  "page_id"
+                ],
+                "properties": {
+                  "id": {
+                    "$ref": "#/$defs/id"
+                  },
+                  "label": {
+                    "$ref": "#/$defs/localizedString"
+                  },
+                  "href": {
+                    "type": "string",
+                    "format": "uri-reference"
+                  },
+                  "page_id": {
+                    "$ref": "#/$defs/id"
+                  },
+                  "current": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/navigationGroup"
+          }
+        }
+      }
+    },
+    "navigationGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "links"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "description": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/navigationLink"
+          }
+        }
+      }
+    },
+    "navigationLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "href"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "description": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "href": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "type": {
+          "type": "string"
+        },
+        "external": {
+          "type": "boolean"
+        }
+      }
+    },
+    "linkObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rel",
+        "href"
+      ],
+      "properties": {
+        "rel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "href": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "type": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "hreflang": {
+          "type": "string"
+        }
+      }
+    },
+    "jsonValue": {
+      "oneOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        }
+      ]
+    },
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "type": {
+          "oneOf": [
+            {
+              "enum": [
+                "null",
+                "string",
+                "boolean",
+                "integer",
+                "number",
+                "array",
+                "object"
+              ]
+            },
+            {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "null",
+                  "string",
+                  "boolean",
+                  "integer",
+                  "number",
+                  "array",
+                  "object"
+                ]
+              }
+            }
+          ]
+        },
+        "enum": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        },
+        "const": {
+          "$ref": "#/$defs/jsonValue"
+        },
+        "default": {
+          "$ref": "#/$defs/jsonValue"
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/inputSchema"
+          }
+        },
+        "required": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          }
+        },
+        "additionalProperties": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "$ref": "#/$defs/inputSchema"
+            }
+          ]
+        },
+        "propertyNames": {
+          "$ref": "#/$defs/inputSchema"
+        },
+        "minProperties": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxProperties": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "items": {
+          "$ref": "#/$defs/inputSchema"
+        },
+        "minItems": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxItems": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "uniqueItems": {
+          "type": "boolean"
+        },
+        "minLength": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxLength": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pattern": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "format": {
+          "enum": [
+            "uri-reference",
+            "uri",
+            "email",
+            "date-time"
+          ]
+        },
+        "minimum": {
+          "type": "number"
+        },
+        "maximum": {
+          "type": "number"
+        },
+        "exclusiveMinimum": {
+          "type": "number"
+        },
+        "exclusiveMaximum": {
+          "type": "number"
+        },
+        "oneOf": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/inputSchema"
+          }
+        },
+        "anyOf": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/inputSchema"
+          }
+        },
+        "allOf": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/inputSchema"
+          }
+        },
+        "if": {
+          "$ref": "#/$defs/inputSchema"
+        },
+        "then": {
+          "$ref": "#/$defs/inputSchema"
+        },
+        "else": {
+          "$ref": "#/$defs/inputSchema"
+        }
+      }
+    },
+    "option": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "value"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "description": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "value": {
+          "$ref": "#/$defs/jsonValue"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "selected": {
+          "type": "boolean"
+        },
+        "source": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "uri-reference"
+            },
+            {
+              "$ref": "#/$defs/mediaResource"
+            }
+          ]
+        },
+        "alt": {
+          "$ref": "#/$defs/localizedString"
+        }
+      }
+    },
+    "tableColumn": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "description": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "type": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "unit": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "sortable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "chartAxis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "unit": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        }
+      }
+    },
+    "chartSeries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "values"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "unit": {
+          "type": "string",
+          "maxLength": 80
+        }
+      }
+    },
+    "contact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "maxLength": 320
+        }
+      }
+    },
+    "geoPoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "latitude",
+        "longitude"
+      ],
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "longitude": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        },
+        "label": {
+          "$ref": "#/$defs/localizedString"
+        }
+      }
+    },
+    "mapMarker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "position"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "position": {
+          "$ref": "#/$defs/geoPoint"
+        },
+        "label": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "description": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "action": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "mediaSession": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "state"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "state": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "source": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "uri-reference"
+            },
+            {
+              "$ref": "#/$defs/mediaResource"
+            }
+          ]
+        },
+        "position_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "mediaTrack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "src",
+        "language"
+      ],
+      "properties": {
+        "src": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "language": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 35
+        },
+        "label": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "kind": {
+          "enum": [
+            "captions",
+            "subtitles",
+            "descriptions",
+            "chapters"
+          ]
+        }
+      }
+    },
+    "navigationStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "instruction"
+      ],
+      "properties": {
+        "instruction": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "distance": {
+          "type": "number",
+          "minimum": 0
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "position": {
+          "$ref": "#/$defs/geoPoint"
+        }
+      }
+    },
+    "pagination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "page",
+        "page_size"
+      ],
+      "properties": {
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "page_size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "next": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "previous": {
+          "type": "string",
+          "format": "uri-reference"
+        }
+      }
+    },
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "destination"
+      ],
+      "properties": {
+        "destination": {
+          "$ref": "#/$defs/geoPoint"
+        },
+        "summary": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "distance": {
+          "type": "number",
+          "minimum": 0
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/navigationStep"
+          }
+        }
+      }
+    },
+    "valueMark": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "label"
+      ],
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "label": {
+          "$ref": "#/$defs/localizedString"
+        }
+      }
+    },
+    "errorState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "code": {
+          "type": "string",
+          "maxLength": 128
+        }
+      }
+    },
+    "validationState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "valid"
+      ],
+      "properties": {
+        "valid": {
+          "type": "boolean"
+        },
+        "message": {
+          "$ref": "#/$defs/localizedString"
+        }
+      }
+    },
+    "mediaResource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "src"
+      ],
+      "properties": {
+        "src": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "alt": {
+          "$ref": "#/$defs/localizedString"
+        },
+        "intrinsic_aspect_ratio": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*:[1-9][0-9]*$"
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "poster": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "captions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "src",
+              "language"
+            ],
+            "properties": {
+              "src": {
+                "type": "string",
+                "format": "uri-reference"
+              },
+              "language": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 35
+              },
+              "label": {
+                "$ref": "#/$defs/localizedString"
+              },
+              "kind": {
+                "enum": [
+                  "captions",
+                  "subtitles",
+                  "descriptions",
+                  "chapters"
+                ]
+              }
+            }
+          }
+        },
+        "transcript": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "integrity": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mediaResource"
+          }
+        }
+      }
+    },
+    "identityAsset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        }
+      }
+    },
+    "brandIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "accent": {
+          "$ref": "#/$defs/brandColor"
+        },
+        "accent_secondary": {
+          "$ref": "#/$defs/brandColor"
+        },
+        "accent_tertiary": {
+          "$ref": "#/$defs/brandColor"
+        },
+        "highlight": {
+          "$ref": "#/$defs/brandColor"
+        },
+        "ink": {
+          "$ref": "#/$defs/brandColor"
+        },
+        "warm": {
+          "$ref": "#/$defs/brandColor"
+        },
+        "cool": {
+          "$ref": "#/$defs/brandColor"
+        },
+        "motif": {
+          "enum": [
+            "none",
+            "orbs",
+            "lines",
+            "grid",
+            "waves"
+          ]
+        }
+      }
+    },
+    "brandColor": {
+      "type": "string",
+      "pattern": "^#[0-9A-Fa-f]{6}$"
+    }
+  }
+}

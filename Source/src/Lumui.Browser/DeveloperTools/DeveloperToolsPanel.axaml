@@ -1,0 +1,321 @@
+<UserControl
+    x:Class="Lumui.Browser.DeveloperTools.DeveloperToolsPanel"
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:controls="using:Lumui.Browser.Controls"
+    xmlns:developerTools="using:Lumui.Browser.DeveloperTools"
+    xmlns:rendering="using:Lumui.Browser.Rendering"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <UserControl.Styles>
+    <Style Selector="Grid.tool-root">
+      <Setter Property="Background" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Border.tool-navigation">
+      <Setter Property="Background" Value="#F7F7F7" />
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="0,0,1,0" />
+    </Style>
+    <Style Selector="TextBlock.tool-eyebrow">
+      <Setter Property="FontSize" Value="11" />
+      <Setter Property="FontWeight" Value="Bold" />
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="LetterSpacing" Value="1.4" />
+    </Style>
+    <Style Selector="TextBlock.tool-heading">
+      <Setter Property="FontSize" Value="34" />
+      <Setter Property="FontWeight" Value="Light" />
+      <Setter Property="Foreground" Value="#111111" />
+      <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <Style Selector="TextBlock.tool-description">
+      <Setter Property="Foreground" Value="#5A5A5A" />
+      <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <Style Selector="TextBlock.tool-muted">
+      <Setter Property="Foreground" Value="#5A5A5A" />
+      <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <Style Selector="Button.tool-nav">
+      <Setter Property="MinHeight" Value="42" />
+      <Setter Property="Padding" Value="13,9" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Left" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="#111111" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="0" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="Button.tool-nav:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#EDEDED" />
+    </Style>
+    <Style Selector="Button.tool-nav.selected">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentSoftBrush}" />
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentStrongBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentBrush}" />
+      <Setter Property="BorderThickness" Value="4,0,0,0" />
+    </Style>
+    <Style Selector="Button.tool-action">
+      <Setter Property="MinHeight" Value="36" />
+      <Setter Property="Padding" Value="11,7" />
+      <Setter Property="Background" Value="#FFFFFF" />
+      <Setter Property="Foreground" Value="#111111" />
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="0" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="Button.tool-action controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#111111" />
+    </Style>
+    <Style Selector="TextBox.tool-search">
+      <Setter Property="MinHeight" Value="38" />
+      <Setter Property="Padding" Value="11,7" />
+      <Setter Property="Background" Value="#FFFFFF" />
+      <Setter Property="Foreground" Value="#111111" />
+      <Setter Property="PlaceholderForeground" Value="#5A5A5A" />
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="Border.tool-subbar">
+      <Setter Property="Background" Value="#F7F7F7" />
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+    </Style>
+    <Style Selector="Border.tool-card">
+      <Setter Property="Background" Value="#F7F7F7" />
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="0" />
+      <Setter Property="Padding" Value="18" />
+    </Style>
+    <Style Selector="Border.tool-separator-vertical">
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="0,0,1,0" />
+    </Style>
+    <Style Selector="Border.tool-separator-horizontal">
+      <Setter Property="BorderBrush" Value="#B8B8B8" />
+      <Setter Property="BorderThickness" Value="0,1,0,0" />
+    </Style>
+    <Style Selector="ScrollViewer.tool-page">
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="VerticalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="VerticalContentAlignment" Value="Stretch" />
+      <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+      <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+    </Style>
+    <Style Selector="StackPanel.tool-page-content">
+      <Setter Property="MaxWidth" Value="900" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="VerticalAlignment" Value="Top" />
+    </Style>
+    <Style Selector="SelectableTextBlock.tool-text">
+      <Setter Property="Foreground" Value="#111111" />
+    </Style>
+    <Style Selector="ListBox.request-list ListBoxItem">
+      <Setter Property="Padding" Value="12,10" />
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="ListBox.request-list ListBoxItem:selected">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentSoftBrush}" />
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentStrongBrush}" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark">
+      <Setter Property="Background" Value="#000000" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark Border.tool-navigation">
+      <Setter Property="Background" Value="#1C1C1C" />
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark Border.tool-subbar">
+      <Setter Property="Background" Value="#1C1C1C" />
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark TextBlock.tool-heading">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark TextBlock.tool-eyebrow">
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentLightBrush}" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark TextBlock.tool-description">
+      <Setter Property="Foreground" Value="#C8C8C8" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark TextBlock.tool-muted">
+      <Setter Property="Foreground" Value="#C8C8C8" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark Button.tool-nav">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark Button.tool-nav:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#2A2A2A" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark Button.tool-nav.selected">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentDarkSurfaceBrush}" />
+      <Setter Property="Foreground" Value="{DynamicResource LumiAccentLightBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource LumiAccentBrush}" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark Border.tool-card">
+      <Setter Property="Background" Value="#1C1C1C" />
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark Border.tool-separator-vertical">
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark Border.tool-separator-horizontal">
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark Button.tool-action">
+      <Setter Property="Background" Value="#1C1C1C" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark TextBox.tool-search">
+      <Setter Property="Background" Value="#1C1C1C" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#626262" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark SelectableTextBlock.tool-text">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.tool-root.dark Button.tool-action controls|FontAwesomeIcon">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast">
+      <Setter Property="Background" Value="#000000" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast Border.tool-navigation">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast Border.tool-subbar">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast Border.tool-card">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast TextBlock.tool-heading">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast TextBlock.tool-description">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast TextBlock.tool-muted">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast SelectableTextBlock.tool-text">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast TextBlock.tool-eyebrow">
+      <Setter Property="Foreground" Value="#FFF200" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast Button.tool-nav">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast Button.tool-nav:pointerover">
+      <Setter Property="Background" Value="#FFFFFF" />
+      <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast Button.tool-nav:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#FFF200" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast Button.tool-nav.selected">
+      <Setter Property="Background" Value="#FFF200" />
+      <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast Button.tool-action">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast Border.tool-separator-vertical">
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="0,0,2,0" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast Border.tool-separator-horizontal">
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="0,2,0,0" />
+    </Style>
+    <Style Selector="Grid.tool-root.high-contrast TextBox.tool-search">
+      <Setter Property="Background" Value="#000000" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+  </UserControl.Styles>
+
+  <Grid x:Name="ToolsRoot" Classes="tool-root" ColumnDefinitions="300,*">
+    <Border x:Name="ToolsNavigation" Classes="tool-navigation">
+      <Grid Margin="20" RowDefinitions="Auto,*" RowSpacing="16">
+        <StackPanel Spacing="5">
+          <TextBlock Classes="tool-eyebrow" Text="INSPECT" />
+          <TextBlock Classes="tool-heading" Text="Developer tools" />
+          <TextBlock Classes="tool-description" Text="Inspect the current page." />
+        </StackPanel>
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+          <StackPanel Spacing="4" HorizontalAlignment="Stretch">
+            <Button x:Name="OverviewNavButton" Classes="tool-nav selected" Content="{x:Static developerTools:DeveloperToolsText.Overview}" />
+            <Button x:Name="SourceNavButton" Classes="tool-nav" Content="{x:Static developerTools:DeveloperToolsText.Source}" />
+            <Button x:Name="StructureNavButton" Classes="tool-nav" Content="{x:Static developerTools:DeveloperToolsText.Tree}" />
+            <Button x:Name="NetworkNavButton" Classes="tool-nav" Content="{x:Static developerTools:DeveloperToolsText.Network}" />
+            <Button x:Name="ProblemsNavButton" Classes="tool-nav" Content="{x:Static developerTools:DeveloperToolsText.Problems}" />
+            <Button x:Name="AccessibilityNavButton" Classes="tool-nav" Content="{x:Static developerTools:DeveloperToolsText.Accessibility}" />
+            <Button x:Name="ActionsNavButton" Classes="tool-nav" Content="{x:Static developerTools:DeveloperToolsText.Actions}" />
+            <Button x:Name="DiagnosticsNavButton" Classes="tool-nav" Content="{x:Static developerTools:DeveloperToolsText.Diagnostics}" />
+          </StackPanel>
+        </ScrollViewer>
+      </Grid>
+    </Border>
+
+    <Grid Grid.Column="1" ClipToBounds="True">
+      <ScrollViewer x:Name="OverviewPage" Classes="tool-page" Padding="24">
+        <StackPanel Classes="tool-page-content" Spacing="16">
+          <StackPanel Spacing="4"><TextBlock Classes="tool-eyebrow" Text="PAGE" /><TextBlock Classes="tool-heading" Text="Overview" /></StackPanel>
+          <Border Classes="tool-card"><SelectableTextBlock x:Name="OverviewText" FontFamily="Cascadia Mono, Consolas" FontSize="13" Classes="tool-text" TextWrapping="Wrap" /></Border>
+        </StackPanel>
+      </ScrollViewer>
+
+      <Grid x:Name="SourcePage" IsVisible="False" RowDefinitions="Auto,*" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ClipToBounds="True">
+        <Border Grid.Row="0" Padding="14" Classes="tool-subbar" BorderThickness="0,0,0,1">
+          <StackPanel Spacing="10">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+              <TextBox x:Name="SourceSearchBox" Classes="tool-search" PlaceholderText="{x:Static developerTools:DeveloperToolsText.FindInSource}" />
+              <Button x:Name="FindButton" Grid.Column="1" Classes="tool-action"><StackPanel Orientation="Horizontal" Spacing="7"><controls:FontAwesomeIcon Icon="{x:Static rendering:BrowserIcons.Find}" IconSize="14" /><TextBlock Text="{x:Static developerTools:DeveloperToolsText.Find}" /></StackPanel></Button>
+            </Grid>
+            <WrapPanel>
+              <Button x:Name="RawButton" Margin="0,0,8,0" Classes="tool-action"><StackPanel Orientation="Horizontal" Spacing="7"><controls:FontAwesomeIcon Icon="{x:Static rendering:BrowserIcons.RawSource}" IconSize="14" /><TextBlock Text="{x:Static developerTools:DeveloperToolsText.Raw}" /></StackPanel></Button>
+              <Button x:Name="FormatButton" Margin="0,0,8,0" Classes="tool-action"><StackPanel Orientation="Horizontal" Spacing="7"><controls:FontAwesomeIcon Icon="{x:Static rendering:BrowserIcons.Format}" IconSize="14" /><TextBlock Text="{x:Static developerTools:DeveloperToolsText.Format}" /></StackPanel></Button>
+              <Button x:Name="CopyButton" Margin="0,0,8,0" Classes="tool-action"><StackPanel Orientation="Horizontal" Spacing="7"><controls:FontAwesomeIcon Icon="{x:Static rendering:BrowserIcons.Copy}" IconSize="14" /><TextBlock Text="{x:Static developerTools:DeveloperToolsText.Copy}" /></StackPanel></Button>
+              <Button x:Name="SaveButton" Classes="tool-action"><StackPanel Orientation="Horizontal" Spacing="7"><controls:FontAwesomeIcon Icon="{x:Static rendering:BrowserIcons.Save}" IconSize="14" /><TextBlock Text="{x:Static developerTools:DeveloperToolsText.Save}" /></StackPanel></Button>
+            </WrapPanel>
+          </StackPanel>
+        </Border>
+        <ContentControl x:Name="SourceHost" Grid.Row="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+      </Grid>
+
+      <Grid x:Name="StructurePage" IsVisible="False" ColumnDefinitions="0.45*,0.55*" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ClipToBounds="True">
+        <Border Classes="tool-separator-vertical"><TreeView x:Name="SemanticTree" Margin="10" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" /></Border>
+        <ScrollViewer Grid.Column="1" Classes="tool-page" Padding="16"><SelectableTextBlock x:Name="InspectorText" FontFamily="Cascadia Mono, Consolas" FontSize="12" Classes="tool-text" TextWrapping="Wrap" /></ScrollViewer>
+      </Grid>
+
+      <Grid x:Name="NetworkPage" IsVisible="False" RowDefinitions="Auto,0.42*,0.58*" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ClipToBounds="True">
+        <Border Padding="12" Classes="tool-subbar" BorderThickness="0,0,0,1"><Button x:Name="ClearNetworkButton" Classes="tool-action" HorizontalAlignment="Left"><StackPanel Orientation="Horizontal" Spacing="7"><controls:FontAwesomeIcon Icon="{x:Static rendering:BrowserIcons.Clear}" IconSize="14" /><TextBlock Text="{x:Static developerTools:DeveloperToolsText.Clear}" /></StackPanel></Button></Border>
+        <ListBox x:Name="RequestList" Grid.Row="1" Margin="8" Classes="request-list" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+        <Border Grid.Row="2" Classes="tool-separator-horizontal"><ScrollViewer Classes="tool-page" Padding="16"><SelectableTextBlock x:Name="RequestText" FontFamily="Cascadia Mono, Consolas" FontSize="12" Classes="tool-text" TextWrapping="Wrap" /></ScrollViewer></Border>
+      </Grid>
+
+      <ScrollViewer x:Name="ProblemsPage" Classes="tool-page" IsVisible="False" Padding="24"><StackPanel Classes="tool-page-content" Spacing="16"><TextBlock Classes="tool-heading" Text="Problems" /><Border Classes="tool-card"><SelectableTextBlock x:Name="ProblemsText" AutomationProperties.Name="Rendering and protocol problems" FontSize="14" Classes="tool-text" TextWrapping="Wrap" /></Border></StackPanel></ScrollViewer>
+      <ScrollViewer x:Name="AccessibilityPage" Classes="tool-page" IsVisible="False" Padding="24"><StackPanel Classes="tool-page-content" Spacing="16"><TextBlock Classes="tool-heading" Text="Accessibility" /><Border Classes="tool-card"><SelectableTextBlock x:Name="AccessibilityText" AutomationProperties.Name="Accessibility inspection" FontSize="14" Classes="tool-text" TextWrapping="Wrap" /></Border></StackPanel></ScrollViewer>
+      <ScrollViewer x:Name="ActionsPage" Classes="tool-page" IsVisible="False" Padding="24"><StackPanel Classes="tool-page-content" Spacing="16"><TextBlock Classes="tool-heading" Text="Actions" /><Border Classes="tool-card"><SelectableTextBlock x:Name="ActionsText" AutomationProperties.Name="Page actions" FontFamily="Cascadia Mono, Consolas" FontSize="13" Classes="tool-text" TextWrapping="Wrap" /></Border></StackPanel></ScrollViewer>
+
+      <Grid x:Name="DiagnosticsPage" IsVisible="False" RowDefinitions="Auto,*">
+        <Border Padding="12" Classes="tool-subbar" BorderThickness="0,0,0,1"><Button x:Name="ClearDiagnosticsButton" Classes="tool-action" HorizontalAlignment="Left"><StackPanel Orientation="Horizontal" Spacing="7"><controls:FontAwesomeIcon Icon="{x:Static rendering:BrowserIcons.Clear}" IconSize="14" /><TextBlock Text="{x:Static developerTools:DeveloperToolsText.Clear}" /></StackPanel></Button></Border>
+        <ScrollViewer Grid.Row="1" Classes="tool-page" Padding="16"><SelectableTextBlock x:Name="DiagnosticsText" FontFamily="Cascadia Mono, Consolas" FontSize="12" Classes="tool-text" TextWrapping="Wrap" /></ScrollViewer>
+      </Grid>
+    </Grid>
+  </Grid>
+</UserControl>

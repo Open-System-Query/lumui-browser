@@ -1,0 +1,147 @@
+<UserControl
+    x:Class="Lumui.Browser.Views.BrowserMenuPanel"
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Lumui.Browser.Controls"
+    xmlns:rendering="using:Lumui.Browser.Rendering"
+    AutomationProperties.Name="Browser menu">
+  <UserControl.Styles>
+    <Style Selector="ScrollViewer.menu-root">
+      <Setter Property="Background" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Button.menu-command">
+      <Setter Property="MinHeight" Value="42" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="0" />
+      <Setter Property="FontWeight" Value="Normal" />
+    </Style>
+    <Style Selector="Border.menu-row-content">
+      <Setter Property="MinHeight" Value="42" />
+      <Setter Property="Padding" Value="14,0" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button.menu-command:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource LumiAccentSoftBrush}" />
+    </Style>
+    <Style Selector="Button.zoom-command">
+      <Setter Property="Width" Value="36" />
+      <Setter Property="MinWidth" Value="36" />
+      <Setter Property="Height" Value="36" />
+      <Setter Property="MinHeight" Value="36" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="Button.zoom-value">
+      <Setter Property="Width" Value="48" />
+      <Setter Property="MinWidth" Value="48" />
+      <Setter Property="Height" Value="36" />
+      <Setter Property="MinHeight" Value="36" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="0" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="controls|FontAwesomeIcon.zoom-icon">
+      <Setter Property="Foreground" Value="#111111" />
+    </Style>
+    <Style Selector="Border.menu-divider">
+      <Setter Property="Height" Value="1" />
+      <Setter Property="Margin" Value="8,5" />
+      <Setter Property="Background" Value="#B8B8B8" />
+    </Style>
+    <Style Selector="ScrollViewer.menu-root.dark Button.menu-command:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#1C1C1C" />
+    </Style>
+    <Style Selector="ScrollViewer.menu-root.dark Border.menu-divider">
+      <Setter Property="Background" Value="#626262" />
+    </Style>
+    <Style Selector="ScrollViewer.menu-root.dark controls|FontAwesomeIcon.zoom-icon">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="ScrollViewer.menu-root.high-contrast Border.menu-divider">
+      <Setter Property="Background" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="ScrollViewer.menu-root.high-contrast Button.menu-command:pointerover">
+      <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    <Style Selector="ScrollViewer.menu-root.high-contrast Button.menu-command:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#FFF200" />
+    </Style>
+    <Style Selector="ScrollViewer.menu-root.high-contrast controls|FontAwesomeIcon.zoom-icon">
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="ScrollViewer.menu-root.dark">
+      <Setter Property="Background" Value="#000000" />
+    </Style>
+    <Style Selector="ScrollViewer.menu-root.high-contrast">
+      <Setter Property="Background" Value="#000000" />
+    </Style>
+  </UserControl.Styles>
+
+  <ScrollViewer x:Name="MenuRoot" Classes="menu-root" Padding="10,12" VerticalScrollBarVisibility="Auto">
+    <StackPanel>
+      <Button x:Name="NewTabButton" Classes="menu-command">
+        <Border Classes="menu-row-content"><Grid Width="330" VerticalAlignment="Center" ColumnDefinitions="*,120"><TextBlock x:Name="NewTabText" /><TextBlock Grid.Column="1" HorizontalAlignment="Right" Classes="subtle" Text="Ctrl+T" /></Grid></Border>
+      </Button>
+      <Button x:Name="NewWindowButton" Classes="menu-command">
+        <Border Classes="menu-row-content"><Grid Width="330" VerticalAlignment="Center" ColumnDefinitions="*,120"><TextBlock x:Name="NewWindowText" /><TextBlock Grid.Column="1" HorizontalAlignment="Right" Classes="subtle" Text="Ctrl+N" /></Grid></Border>
+      </Button>
+      <Button x:Name="NewPrivateWindowButton" Classes="menu-command">
+        <Border Classes="menu-row-content"><Grid Width="330" VerticalAlignment="Center" ColumnDefinitions="*,120"><TextBlock x:Name="NewPrivateWindowText" /><TextBlock Grid.Column="1" HorizontalAlignment="Right" Classes="subtle" Text="Ctrl+Shift+P" /></Grid></Border>
+      </Button>
+      <Border Classes="menu-divider" />
+      <Border Classes="menu-row-content">
+        <Grid Width="330" VerticalAlignment="Center" ColumnDefinitions="*,120">
+          <TextBlock VerticalAlignment="Center" Text="Zoom" />
+          <Grid Grid.Column="1" ColumnDefinitions="36,48,36">
+            <Button x:Name="ZoomOutButton" Classes="zoom-command" ToolTip.Tip="Zoom out (Ctrl+-)">
+              <controls:FontAwesomeIcon Classes="zoom-icon" Icon="{x:Static rendering:BrowserIcons.ZoomOut}" IconSize="14" />
+            </Button>
+            <Button x:Name="ZoomResetButton" Grid.Column="1" Classes="zoom-value" ToolTip.Tip="Reset page zoom (Ctrl+0)">
+              <TextBlock x:Name="ZoomValueText" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" />
+            </Button>
+            <Button x:Name="ZoomInButton" Grid.Column="2" Classes="zoom-command" ToolTip.Tip="Zoom in (Ctrl++)">
+              <controls:FontAwesomeIcon Classes="zoom-icon" Icon="{x:Static rendering:BrowserIcons.ZoomIn}" IconSize="14" />
+            </Button>
+          </Grid>
+        </Grid>
+      </Border>
+      <Button x:Name="FullScreenButton" Classes="menu-command">
+        <Border Classes="menu-row-content"><Grid Width="330" VerticalAlignment="Center" ColumnDefinitions="*,120"><TextBlock x:Name="FullScreenText" /><TextBlock Grid.Column="1" HorizontalAlignment="Right" Classes="subtle" Text="F11" /></Grid></Border>
+      </Button>
+      <Border Classes="menu-divider" />
+      <Button x:Name="BookmarksButton" Classes="menu-command">
+        <Border Classes="menu-row-content"><Grid Width="330" VerticalAlignment="Center" ColumnDefinitions="*,120"><TextBlock x:Name="BookmarksText" /><TextBlock Grid.Column="1" HorizontalAlignment="Right" Classes="subtle" Text="Ctrl+Shift+O" /></Grid></Border>
+      </Button>
+      <Button x:Name="HistoryButton" Classes="menu-command">
+        <Border Classes="menu-row-content"><Grid Width="330" VerticalAlignment="Center" ColumnDefinitions="*,120"><TextBlock x:Name="HistoryText" /><TextBlock Grid.Column="1" HorizontalAlignment="Right" Classes="subtle" Text="Ctrl+H" /></Grid></Border>
+      </Button>
+      <Button x:Name="DownloadsButton" Classes="menu-command">
+        <Border Classes="menu-row-content"><Grid Width="330" VerticalAlignment="Center" ColumnDefinitions="*,120"><TextBlock x:Name="DownloadsText" /><TextBlock Grid.Column="1" HorizontalAlignment="Right" Classes="subtle" Text="Ctrl+J" /></Grid></Border>
+      </Button>
+      <Button x:Name="PasswordsButton" Classes="menu-command">
+        <Border Classes="menu-row-content"><Grid Width="330" VerticalAlignment="Center" ColumnDefinitions="*,120"><TextBlock x:Name="PasswordsText" /></Grid></Border>
+      </Button>
+      <Border Classes="menu-divider" />
+      <Button x:Name="SettingsButton" Classes="menu-command">
+        <Border Classes="menu-row-content"><Grid Width="330" VerticalAlignment="Center" ColumnDefinitions="*,120"><TextBlock x:Name="SettingsText" /></Grid></Border>
+      </Button>
+      <Button x:Name="ToolsButton" Classes="menu-command">
+        <Border Classes="menu-row-content"><Grid Width="330" VerticalAlignment="Center" ColumnDefinitions="*,120"><TextBlock x:Name="ToolsText" /><TextBlock Grid.Column="1" HorizontalAlignment="Right" Classes="subtle" Text="F12" /></Grid></Border>
+      </Button>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>
