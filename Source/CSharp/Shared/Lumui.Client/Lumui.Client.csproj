@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>Lumui.Client</AssemblyName>
+    <RootNamespace>Lumui.Client</RootNamespace>
+    <AssemblyTitle>Lumui.Client</AssemblyTitle>
+    <Product>LUMUI</Product>
+    <Description>Native client for LUMUI applications.</Description>
+    <IsAotCompatible>true</IsAotCompatible>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\..\resources\lumui\protocol.json" LogicalName="Lumui.Specification.protocol.json" />
+    <EmbeddedResource Include="..\..\..\resources\lumui\component-catalog.json" LogicalName="Lumui.Specification.component-catalog.json" />
+    <EmbeddedResource Include="..\..\..\resources\lumui\schemas\surface.schema.json" LogicalName="Lumui.Specification.surface.schema.json" />
+    <EmbeddedResource Include="..\..\..\resources\lumui\schemas\service-descriptor.schema.json" LogicalName="Lumui.Specification.service-descriptor.schema.json" />
+    <EmbeddedResource Include="..\..\..\resources\lumui\schemas\discovery.schema.json" LogicalName="Lumui.Specification.discovery.schema.json" />
+    <EmbeddedResource Include="..\..\..\resources\lumui\schemas\action-message.schema.json" LogicalName="Lumui.Specification.action-message.schema.json" />
+  </ItemGroup>
+</Project>

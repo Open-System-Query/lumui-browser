@@ -1,54 +1,65 @@
-# LUMI Browser
+# LUMUI Reference Browsers
 
-**Reference desktop and terminal browser for LUMUI.**
+**Reference browsers for LUMUI.**
 
-![LUMI desktop browser](Docs/Images/lumi-desktop-website.png)
+This repository contains standalone browser and renderer implementations for the LUMUI specification. Each implementation demonstrates one possible presentation of the same semantic application model. No implementation is canonical or more important than another.
 
-LUMI requests validated LUMUI documents directly and renders semantic components as native Avalonia or Terminal.Gui controls. It does not embed an HTML browser engine.
-
-Preview components render their nested component directly in a dedicated native or terminal area. They do not open an embedded viewer or load another surface.
-
-| Terminal browser | Developer tools |
+| C# with Avalonia | C# with Terminal.Gui |
 | --- | --- |
-| ![LUMI terminal browser](Docs/Images/lumi-cli-website.png) | ![LUMI developer tools](Docs/Images/lumi-desktop-developer-tools.png) |
+| ![Avalonia reference browser](Docs/Images/lumui-avalonia-browser.png) | ![Terminal.Gui reference browser](Docs/Images/lumui-terminal-browser.png) |
+| ![Avalonia developer tools](Docs/Images/lumui-avalonia-developer-tools.png) | ![Terminal.Gui developer tools](Docs/Images/lumui-terminal-developer-tools.png) |
+| Native desktop controls, window management and graphical developer tools. | Keyboard-first terminal controls, dialogs, menus and terminal media presentation. |
+| [Open the Avalonia implementation](Source/CSharp/Avalonia/) | [Open the Terminal.Gui implementation](Source/CSharp/TerminalGui/) |
 
-## Included
+Both current implementations support navigation, tabs, history, bookmarks, downloads, credential storage, accessibility preferences, developer inspection and semantic component rendering. They request validated LUMUI documents directly and do not embed an HTML browser engine.
 
-- Native desktop and terminal interfaces
-- Tabs, history, bookmarks, downloads and credential storage
-- Keyboard navigation and configurable accessibility presentation
-- Semantic source, request, structure and accessibility inspection
-- Image, audio and video presentation
-- One `lumi.exe` launcher that selects desktop or terminal mode
+## Repository structure
+
+```text
+Source/
+  CSharp/
+    Avalonia/       Avalonia browser and solution
+    TerminalGui/    Terminal.Gui browser and solution
+    Shared/         Shared C# protocol client
+  resources/        Versioned LUMUI schemas and component data
+```
+
+Future implementations can be added beside `CSharp` in their own language or platform directory. Examples may use Python, WPF, mobile frameworks, kiosk toolkits or other suitable technologies.
 
 ## Build and run
 
-LUMI requires Windows and the .NET 10 SDK.
+The current C# implementations require Windows and the .NET 10 SDK. Each solution can be restored, built and run independently.
+
+### Avalonia
 
 ```sh
 cd Source
-dotnet restore Lumi.sln
-dotnet run --project src/Lumui.Browser
-dotnet run --project src/Lumui.Cli -- https://lumuiopensource.com/
-dotnet run --project src/Lumui.Launcher -- --cli
+dotnet restore CSharp/Avalonia/Lumui.Avalonia.sln
+dotnet run --project CSharp/Avalonia/Lumui.Browser -- https://lumuiopensource.com/
 ```
 
-The repository contains separate `Lumi.Desktop.sln` and `Lumi.Cli.sln` entry points, plus `Lumi.sln` for the unified release. A versioned snapshot of the normative LUMUI resources, including the [component specification](Source/resources/lumui/lumui-components.md), is included for deterministic builds; the canonical source is the [LUMUI repository](https://github.com/Open-System-Query/lumui).
-
-## Publish
+### Terminal.Gui
 
 ```sh
 cd Source
-dotnet publish src/Lumui.Browser/Lumui.Browser.csproj -p:PublishProfile=win-x64-aot
-dotnet publish src/Lumui.Cli/Lumui.Cli.csproj -p:PublishProfile=win-x64-aot
+dotnet restore CSharp/TerminalGui/Lumui.TerminalGui.sln
+dotnet run --project CSharp/TerminalGui/Lumui.Cli -- https://lumuiopensource.com/
 ```
 
-Both the Avalonia desktop browser in `Lumi.Desktop.sln` and the terminal browser in `Lumi.Cli.sln` publish with Native AOT. Their executable projects enable full trimming, generated JSON metadata and AOT compatibility analysis. Native AOT publishing targets the executable project inside each solution.
+## Native AOT publishing
 
-## Keyboard
+```sh
+cd Source
+dotnet publish CSharp/Avalonia/Lumui.Browser/Lumui.Browser.csproj -p:PublishProfile=win-x64-aot
+dotnet publish CSharp/TerminalGui/Lumui.Cli/Lumui.Cli.csproj -p:PublishProfile=win-x64-aot
+```
 
-Use `Ctrl+L` for the address, `Ctrl+T` for a new tab, `Ctrl+W` to close a tab, `Ctrl+Tab` to switch tabs, `Alt+Left` and `Alt+Right` for history, `Ctrl+U` for source, `F12` for developer tools and `F1` for terminal help.
+The Avalonia and Terminal.Gui executable projects enable Native AOT, trimming analysis and generated JSON metadata.
+
+## Specification resources
+
+A versioned snapshot of the normative LUMUI resources, including the [component specification](Source/resources/lumui/lumui-components.md), is included for deterministic builds. The canonical resources are maintained in the [LUMUI repository](https://github.com/Open-System-Query/lumui).
 
 ## License
 
-LUMI Browser is released under the [MIT License](LICENSE) by [Open System Query](https://opensystemquery.nl/).
+The reference browsers are released under the [MIT License](LICENSE) by [Open System Query](https://opensystemquery.nl/).

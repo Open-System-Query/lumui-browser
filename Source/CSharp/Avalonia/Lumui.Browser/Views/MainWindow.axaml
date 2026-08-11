@@ -1,0 +1,227 @@
+<Window
+    x:Class="Lumui.Browser.Views.MainWindow"
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:configuration="using:Lumui.Browser.Configuration"
+    xmlns:controls="using:Lumui.Browser.Controls"
+    xmlns:rendering="using:Lumui.Browser.Rendering"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="{x:Static configuration:BrowserDefaults.WindowTitle}"
+    Icon="/Assets/lumui-brand.ico"
+    Width="1440"
+    Height="920"
+    MinWidth="900"
+    MinHeight="640">
+  <Grid RowDefinitions="Auto,Auto,*,Auto">
+    <Border
+        Grid.Row="0"
+        Padding="16,7,12,6"
+        Classes="tab-bar">
+      <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="20">
+        <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+          <Image
+              Width="30"
+              Height="30"
+              AutomationProperties.Name="LUMUI Browser"
+              Source="/Assets/lumui-brand.ico" />
+          <StackPanel Spacing="0" VerticalAlignment="Center">
+            <TextBlock Classes="shell-brand" Text="lumui" />
+            <TextBlock x:Name="ModeText" Classes="shell-label" />
+          </StackPanel>
+        </StackPanel>
+        <ScrollViewer
+            Grid.Column="1"
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Disabled">
+          <StackPanel x:Name="TabsHost" Orientation="Horizontal" Spacing="0" />
+        </ScrollViewer>
+        <Button
+            x:Name="NewTabButton"
+            Grid.Column="2"
+            Classes="toolbar compact"
+            AutomationProperties.Name="New tab"
+            ToolTip.Tip="New tab (Ctrl+T)">
+          <controls:FontAwesomeIcon
+              Icon="{x:Static rendering:BrowserIcons.NewTab}"
+              IconSize="14" />
+        </Button>
+      </Grid>
+    </Border>
+
+    <Border
+        Grid.Row="1"
+        Padding="16,8"
+        Classes="shell-bar">
+      <Grid
+          ColumnDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto,Auto,Auto"
+          ColumnSpacing="4"
+          VerticalAlignment="Center">
+        <Button
+            x:Name="BackButton"
+            Grid.Column="0"
+            Classes="toolbar"
+            ToolTip.Tip="{x:Static configuration:BrowserText.Back}">
+          <controls:FontAwesomeIcon
+              Icon="{x:Static rendering:BrowserIcons.Back}"
+              IconSize="17"
+              VerticalAlignment="Center" />
+        </Button>
+        <Button
+            x:Name="ForwardButton"
+            Grid.Column="1"
+            Classes="toolbar"
+            ToolTip.Tip="{x:Static configuration:BrowserText.Forward}">
+          <controls:FontAwesomeIcon
+              Icon="{x:Static rendering:BrowserIcons.Forward}"
+              IconSize="17"
+              VerticalAlignment="Center" />
+        </Button>
+        <Button
+            x:Name="ReloadButton"
+            Grid.Column="2"
+            Classes="toolbar"
+            ToolTip.Tip="{x:Static configuration:BrowserText.Reload}">
+          <controls:FontAwesomeIcon
+              Icon="{x:Static rendering:BrowserIcons.Reload}"
+              IconSize="17"
+              VerticalAlignment="Center" />
+        </Button>
+
+        <Button
+            x:Name="HomeButton"
+            Grid.Column="3"
+            Classes="toolbar"
+            ToolTip.Tip="Home (Alt+Home)">
+          <controls:FontAwesomeIcon
+              Icon="{x:Static rendering:BrowserIcons.Home}"
+              IconSize="16" />
+        </Button>
+
+        <Border Grid.Column="4" Margin="12,0" Classes="address-form">
+          <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="2">
+            <TextBlock Grid.Column="0" Margin="5,0,1,0" Classes="address-state" Text="■" />
+            <TextBox
+                x:Name="AddressBox"
+                Grid.Column="1"
+                Classes="address"
+                AutomationProperties.HelpText="Enter a LUMUI site address. HTTPS is added automatically."
+                PlaceholderText="{x:Static configuration:BrowserText.WebsiteAddress}" />
+            <Button
+                x:Name="GoButton"
+                Grid.Column="2"
+                Classes="primary-action address-open">
+              <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBlock VerticalAlignment="Center" Text="{x:Static configuration:BrowserText.Open}" />
+                <controls:FontAwesomeIcon
+                    Icon="{x:Static rendering:BrowserIcons.Open}"
+                    IconSize="15"
+                    VerticalAlignment="Center" />
+              </StackPanel>
+            </Button>
+          </Grid>
+        </Border>
+
+        <ToggleButton
+            x:Name="BookmarkButton"
+            Grid.Column="5"
+            Classes="toolbar"
+            ToolTip.Tip="Bookmark this page (Ctrl+D)">
+          <controls:FontAwesomeIcon
+              Icon="{x:Static rendering:BrowserIcons.Bookmark}"
+              IconSize="16" />
+        </ToggleButton>
+        <Button
+            x:Name="PersonalizationButton"
+            Grid.Column="6"
+            Classes="toolbar"
+            ToolTip.Tip="Reading settings">
+          <controls:FontAwesomeIcon
+              Icon="{x:Static rendering:BrowserIcons.Accessibility}"
+              IconSize="16" />
+        </Button>
+        <Button
+            x:Name="DeveloperToolsButton"
+            Grid.Column="7"
+            Classes="toolbar"
+            ToolTip.Tip="{x:Static configuration:BrowserText.DeveloperTools}">
+          <controls:FontAwesomeIcon
+              Icon="{x:Static rendering:BrowserIcons.DeveloperTools}"
+              IconSize="16" />
+        </Button>
+        <ToggleButton
+            x:Name="BrowserMenuButton"
+            Grid.Column="8"
+            Classes="toolbar"
+            ToolTip.Tip="Browser menu">
+          <controls:FontAwesomeIcon
+              Icon="{x:Static rendering:BrowserIcons.Menu}"
+              IconSize="17" />
+        </ToggleButton>
+      </Grid>
+    </Border>
+
+    <SplitView
+        x:Name="WorkspaceSplit"
+        Grid.Row="2"
+        CompactPaneLength="0"
+        DisplayMode="Overlay"
+        IsPaneOpen="False"
+        OpenPaneLength="440"
+        PanePlacement="Right">
+      <SplitView.Pane>
+        <Border Classes="side-panel">
+          <ContentControl x:Name="SidePanelHost" />
+        </Border>
+      </SplitView.Pane>
+      <Border Classes="browser-canvas">
+        <Grid RowDefinitions="Auto,*">
+          <ProgressBar
+              x:Name="LoadingBar"
+              Grid.Row="0"
+              Height="3"
+              IsIndeterminate="True"
+              IsHitTestVisible="False"
+              Maximum="100"
+              Value="0"
+              IsVisible="False"
+              AutomationProperties.Name="Page loading" />
+          <ScrollViewer
+              x:Name="ContentScroll"
+              Grid.Row="1"
+              AutomationProperties.AccessibilityView="Control"
+              AutomationProperties.LandmarkType="Main"
+              HorizontalScrollBarVisibility="Disabled"
+              VerticalScrollBarVisibility="Auto">
+            <ContentControl
+                x:Name="SurfaceHost"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch" />
+          </ScrollViewer>
+        </Grid>
+      </Border>
+    </SplitView>
+
+    <Border
+        Grid.Row="3"
+        Padding="16,6"
+        Classes="status-bar">
+      <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+        <StackPanel Orientation="Horizontal" Spacing="9">
+          <TextBlock Classes="shell-label" Text="STATUS" VerticalAlignment="Center" />
+          <Ellipse Width="7" Height="7" Classes="status-indicator" VerticalAlignment="Center" />
+          <TextBlock
+              x:Name="StatusText"
+              AutomationProperties.LiveSetting="Polite"
+              Classes="subtle"
+              Text="{x:Static configuration:BrowserText.Ready}"
+              TextWrapping="Wrap" />
+        </StackPanel>
+        <TextBlock
+            x:Name="DocumentInfoText"
+            Grid.Column="1"
+            Classes="subtle"
+            Text="" />
+      </Grid>
+    </Border>
+  </Grid>
+</Window>
